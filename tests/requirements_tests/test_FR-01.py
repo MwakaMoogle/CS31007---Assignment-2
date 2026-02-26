@@ -7,3 +7,4 @@ def test_create_default_question():
     assert q.questionText == ""
     assert q.questionAnswer == Answer()
     assert q.scoringStrategy == "default"
+
