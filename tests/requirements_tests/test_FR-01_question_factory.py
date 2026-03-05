@@ -54,4 +54,15 @@ class TestQuestionFactory:
                     text = "What song is this?",
                     answer = "SEVEN GOBLINS, Masayoshi Takanaka"
                     )
-       
+      
+    def test_factory_rejects_empty_text_string(self):
+        """
+        Tests that creating a question object with the text field empty raises an error
+        """
+        pass
+
+    def test_factory_rejects_nill_for_an_answer(self):
+        """
+        Tests that having the answer of the question being nill raises an error
+        """
+        pass
