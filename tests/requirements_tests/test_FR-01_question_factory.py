@@ -11,7 +11,7 @@ class TestQuestionFactory:
 
         # Create the Question object and popluate it
         question = factory.createQuestion(
-            type = "MultipleChoice",
+            qType = "MultipleChoice",
             text = "What is the capital of France?",
             answer = "Paris",
             possibleAnswers = ["London", "Paris", "Berlin", "Madrid"]
@@ -30,7 +30,7 @@ class TestQuestionFactory:
 
         # Create the question object and popluate it 
         question = factory.createQuestion(
-                type = "Text",
+                qType = "Text",
                 text = "What is 5 + 5?",
                 answer = "10"
                 )
@@ -48,4 +48,10 @@ class TestQuestionFactory:
         factory = QuestionFactory()
 
         # Create a question object and populate it
-        question = factory.createQuestion()
+        with pytest.raises(ValueError, match="Unknown Question Type"):
+            question = factory.createQuestion(
+                    qType = "Audio",
+                    text = "What song is this?",
+                    answer = "SEVEN GOBLINS, Masayoshi Takanaka"
+                    )
+       
