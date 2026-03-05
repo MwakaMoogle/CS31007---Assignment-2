@@ -29,6 +29,9 @@ class TestingScoringStratagey:
         strategy = PenaltyScore()
         assert strategy.executeScoring(
             isCorrect = False, difficulty = "penalty") == -1
-
-     # Im stuck : I will figure out later
-    def test_invalid_type_raise_error(self):()
+        
+    #Pass an invalid data type (e.g., a String instead of a Boolean for isCorrect) into the scoring strategy 
+    def test_invalid_type_raise_error(self):
+        strategy = StandardScore()
+        with pytest.raises(TypeError):
+            strategy.executeScoring(isCorrect = "True", difficulty = "Standard")
