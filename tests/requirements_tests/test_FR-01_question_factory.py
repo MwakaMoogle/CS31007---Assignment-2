@@ -59,10 +59,34 @@ class TestQuestionFactory:
         """
         Tests that creating a question object with the text field empty raises an error
         """
-        pass
+         factory = QustionFactory(
+        
+        # Testing an empty string as the input for text
+        with pytest.raises(ValueError, match="Question text cannot be empty"):
+            factory.createQuestion(
+                qType = "Text",
+                text = "", # Empty String
+                answer = "10"
+                )
 
+        # Testing white space(s) for the text
+        with pytest.raises(ValueError, match-"Question text cannot be empty"):
+            factory.createQuestion(
+                qtype = "Text",
+                text = "   ", # Empty space
+                answer = "10"
+                )
+        
     def test_factory_rejects_nill_for_an_answer(self):
         """
         Tests that having the answer of the question being nill raises an error
         """
-        pass
+        
+        factory = QuestionFactory()
+
+        with pytest.raises(TypeError, match="Answer cannot be none"):
+            factory.createQuestion(
+                qType = "Text",
+                text = "What is 5 + 5",
+                answer = None #Invalid Data Type Requested
+                )
