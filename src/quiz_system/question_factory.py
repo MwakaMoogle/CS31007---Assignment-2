@@ -1,2 +1,8 @@
+from type import Type
+
 class QuestionFactory:
-    pass
+    def __init__(self):
+        pass
+    
+    def create_question(self, qType: Type, text: String, answer: String, possibleAnswers: String[]):
+        pass
