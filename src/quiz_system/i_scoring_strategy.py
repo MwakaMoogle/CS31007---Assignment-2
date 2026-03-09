@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class IScoringStrategy(ABC):
 
     @abstractmethod
-    def executeScoring(self, isCorrect) -> int:
+    def executeScoring(self, isCorrect: bool) -> int:
         """
         Define how points are awarded
         """
@@ -11,11 +11,7 @@ class IScoringStrategy(ABC):
 
 class StandardScore(IScoringStrategy):
     
-    def __init__(self):
-        pass
-
-
-    def executeScoring(self, isCorrect):
+    def executeScoring(self, isCorrect: bool) -> int:
         if isCorrect:
             return 1
         else: 
@@ -23,10 +19,7 @@ class StandardScore(IScoringStrategy):
     
 class HardScore(IScoringStrategy):
 
-    def __init__(self):
-        pass
-
-    def executeScoring(self, isCorrect):
+    def executeScoring(self, isCorrect: bool) -> int:
         if isCorrect:
             return 5
         else:
@@ -34,17 +27,20 @@ class HardScore(IScoringStrategy):
 
 class PenaltyScore(IScoringStrategy):
 
-    def __init__(self):
-        pass
     
-    def executeScoring(self, isCorrect):
+    def executeScoring(self, isCorrect: bool) -> int:
         if isCorrect:
-            return -1
+            return 2
         else:
-            return 0
+            return -1
 
 class BonusScore(IScoringStrategy):
-    pass
+    
+    def executeScoring(self, isCorrect: bool) -> int:
+        if isCorrect:
+            return 10
+        else:
+            return 0
 
 
 
