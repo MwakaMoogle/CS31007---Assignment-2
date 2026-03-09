@@ -5,8 +5,8 @@ class Quiz:
         self.author = author
 
 
-    def addRound(self, round_num):
-        self.rounds = self.rounds + [round] 
+    def addRound(self, rounds):
+        self.rounds = self.rounds + [rounds] 
 
     def removeRound(self, index):
         if not isinstance(index, int):
