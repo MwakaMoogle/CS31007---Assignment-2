@@ -1,12 +1,12 @@
 import pytest
-from quiz_system import StandardScore, HardScore, PenaltyScore 
+from quiz_system import i_scoring_strategy 
 
 class TestingScoringStratagey:
     
     #Test for allowing different scoring rules for different question types
 
     def test_standard_correct_1(self):
-        strategy = StandardScore()
+        strategy = i_scoring_strategy.StandardScore
         assert strategy.executeScoring(
             isCorrect= True, difficulty = "Standard") ==1
 

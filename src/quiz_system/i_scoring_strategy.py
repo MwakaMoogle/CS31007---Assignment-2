@@ -2,32 +2,42 @@ from abc import ABC, abstractmethod
 
 class IScoringStrategy(ABC):
 
-    @abstactmethod
-    def executeScoring(isCorrect, difficulty):
+    @abstractmethod
+    def executeScoring(self, isCorrect) -> int:
         """
-        Define how points are awarderd
+        Define how points are awarded
         """
         pass
 
-class StandardScore(IscoringStrategy):
+class StandardScore(IScoringStrategy):
     
-    def executeScoring(isCorrect, difficulty):
-        if iscorrect:
+    def __init__(self):
+        pass
+
+
+    def executeScoring(self, isCorrect):
+        if isCorrect:
             return 1
         else: 
             return 0
     
 class HardScore(IScoringStrategy):
 
-    def executeScoring(isCorrect, difficulty):
+    def __init__(self):
+        pass
+
+    def executeScoring(self, isCorrect):
         if isCorrect:
             return 5
         else:
             return 0
 
 class PenaltyScore(IScoringStrategy):
+
+    def __init__(self):
+        pass
     
-    def executeScoring(isCorrect, difficulty):
+    def executeScoring(self, isCorrect):
         if isCorrect:
             return -1
         else:
