@@ -6,7 +6,7 @@ class TestingScoringStratagey:
     #Test for allowing different scoring rules for different question types
 
     def test_standard_correct_1(self):
-        strategy = i_scoring_strategy.StandardScore
+        strategy = i_scoring_strategy.StandardScore()
         assert strategy.executeScoring(isCorrect = True) == 1
 
     def test_standard_incorrect_0(self):
@@ -29,4 +29,4 @@ class TestingScoringStratagey:
     def test_invalid_type_raise_error(self):
         strategy = i_scoring_strategy.StandardScore()
         with pytest.raises(TypeError):
-            strategy.executeScoring(isCorrect = "True")
+            strategy.executeScoring("True")
