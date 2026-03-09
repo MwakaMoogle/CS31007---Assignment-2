@@ -59,7 +59,7 @@ class TestQuestionFactory:
         """
         Tests that creating a question object with the text field empty raises an error
         """
-        factory = QustionFactory(
+        factory = QustionFactory()
         
         # Testing an empty string as the input for text
         with pytest.raises(ValueError, match="Question text cannot be empty"):
