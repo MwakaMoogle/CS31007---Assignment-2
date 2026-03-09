@@ -1,2 +1,3 @@
 class IScoringStrategy:
     pass
+

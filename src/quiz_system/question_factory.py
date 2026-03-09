@@ -1,5 +1,3 @@
-from type import Type
-
 class QuestionFactory:
     def __init__(self):
         pass
