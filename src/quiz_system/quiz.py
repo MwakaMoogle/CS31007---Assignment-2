@@ -6,7 +6,7 @@ class Quiz:
 
 
     def addRound(self, round_num):
-        self.rounds.append(round_num)
+        self.rounds = self.rounds + [round] 
 
     def removeRound(self, index):
         if not isinstance(index, int):
