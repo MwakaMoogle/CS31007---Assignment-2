@@ -4,5 +4,5 @@ class QuestionFactory:
     def __init__(self):
         pass
     
-    def create_question(self, qType: Type, text: str, answer: str, possibleAnswers: str[]):
+    def create_question(self, qType: Type, text: str, answer: str, possibleAnswers: list[str]):
         pass
