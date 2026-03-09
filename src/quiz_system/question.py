@@ -7,13 +7,13 @@ class Question(ABC):
         self.scoring_strategy = scoring_strategy
 
     @abstractmethod
-    def display():
+    def display(self):
         pass
 
-    def print_question_text():
-        print(question_text + "?" if question_text[-1] != "?" else "") # if the question was written with a "?" at the end, use that, else add it
+    def print_question_text(self):
+        print(self.question_text + ("?" if self.question_text[-1] != "?" else "")) # if the question was written with a "?" at the end, use that, else add it
 
-    def calculateScore():
+    def calculateScore(self):
         pass
 
 class MultipleChoiceQuestion(Question):
@@ -21,10 +21,17 @@ class MultipleChoiceQuestion(Question):
         super().__init__(question_text, correct_answer, scoring_strategy)
         self.possible_answers = possible_answers
 
-    def print_possible_answers():
-        print(f"+{"-" for answer in possible_answers}")
+    def print_possible_answers(self):
+        answer_row = ""
+        for answer in self.possible_answers:
+            answer_row += answer + " "
+            
+        answer_row = answer_row.strip()
+        print(answer_row)
 
-    def display():
+
+
+    def display(self):
         print_question_text()
         print_possible_answers()
 
@@ -33,5 +40,5 @@ class TextQuestion(Question):
     def __init__(self, question_text: str, correct_answer: str, scoring_strategy: IScoringStrategy):
         super().__init__(question_text, correct_answer, scoring_strategy)
 
-    def display():
+    def display(self):
         print_question_text()

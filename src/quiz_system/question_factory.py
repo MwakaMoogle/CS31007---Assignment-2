@@ -5,7 +5,7 @@ class QuestionFactory:
     
     _question_types = {
             "Text": TextQuestion,
-            "MultipleChoice": MultiplChoiceQuestion
+            "MultipleChoice": MultipleChoiceQuestion
     }
 
     def createQuestion(self, qType: str, **kwargs):
