@@ -5,10 +5,10 @@ class Quiz:
         self.author = author
 
 
-    def addRound(self, rounds):
+    def add_round(self, rounds):
         self.rounds = self.rounds + [rounds] 
 
-    def removeRound(self, index):
+    def remove_round(self, index):
         if not isinstance(index, int):
             raise TypeError("index has to be an integer")
         if index < 0 or index >=len(self.rounds):
@@ -16,5 +16,5 @@ class Quiz:
         
         self.rounds.pop(index)
 
-    def getTotalRounds(self):
+    def get_total_rounds(self):
         return len(self.rounds)

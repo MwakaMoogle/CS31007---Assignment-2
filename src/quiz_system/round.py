@@ -12,6 +12,8 @@ class Round:
         if index < 0 or index>=len(self.questions):
              raise IndexError("Enter a question that exists")
 
+        return self.questions[index]
+
     def get_questions(self):
-        return questions
+        return self.questions
             

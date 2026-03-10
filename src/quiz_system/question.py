@@ -35,8 +35,8 @@ class MultipleChoiceQuestion(Question):
 
 
     def display(self):
-        print_question_text()
-        print_possible_answers()
+        super().print_question_text()
+        self.print_possible_answers()
 
 
 class TextQuestion(Question):
@@ -44,4 +44,4 @@ class TextQuestion(Question):
         super().__init__(question_text, correct_answer, scoring_strategy)
 
     def display(self):
-        print_question_text()
+        super().print_question_text()

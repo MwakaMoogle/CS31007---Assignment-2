@@ -56,7 +56,7 @@ class TestQuizSystem:
                 possible_answers = ["6", "1", "7", "5"]
                 ),
                 factory.create_question(
-                q_type="Written",
+                q_type="Text",
                 question_text="What comes after 6",
                 correct_answer="7"
                 ),
