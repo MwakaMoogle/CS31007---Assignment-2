@@ -1,6 +1,6 @@
 class GameSession:
     
-    def _init_(self, current_quiz, participating_teams, current_round_index):
+    def __init__(self, current_quiz, participating_teams, current_round_index):
         self.current_quiz = current_quiz
         self.participating_teams = participating_teams 
         self.current_round_index = current_round_index
@@ -12,7 +12,7 @@ class GameSession:
         if team not in self.participating_teams:
             raise ValueError("This team is not in this session")
         
-        team.addPoints(points)
+        team.add_points(points)
 
     def get_leaderboard(self):
         return sorted(

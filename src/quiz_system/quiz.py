@@ -1,5 +1,5 @@
 class Quiz:
-    def _init_(self, title, author):
+    def __init__(self, title, author):
         self.title = title
         self.rounds = []
         self.author = author
