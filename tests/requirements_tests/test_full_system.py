@@ -64,7 +64,7 @@ class TestQuizSystem:
                 q_type="MultipleChoice",
                 question_text="What is 9+10",
                 correct_answer="19",
-                possible_answers = ["21", "19", "910"]
+                possible_answers = ["21", "19", "910"],
                 scoring_strategy=HardScore()
                 ),
                 factory.create_question(
