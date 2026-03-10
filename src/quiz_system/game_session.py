@@ -5,23 +5,23 @@ class GameSession:
         self.participating_teams = participating_teams 
         self.current_round_index = current_round_index
 
-    def startSession(self):
+    def start_session(self):
         self.current_round_index = 0 
 
-    def enterScore(self, team, points):
+    def enter_score(self, team, points):
         if team not in self.participating_teams:
             raise ValueError("This team is not in this session")
         
         team.addPoints(points)
 
-    def getLeaderboard(self):
+    def get_leaderboard(self):
         return sorted(
             self.participating_teams, 
             key=lambda team: team.getScore(), 
             reverse=True )
     
     def displayLeaderboard(self):
-        leaderboard = self.getLeaderboard()
+        leaderboard = self.get_leaderboard()
 
         for i, team in enumerate(leaderboard, start=1):
-            print(f"{i}. {team.teamName} - {team.getScore()}")
+            print(f"{i}. {team.teamName} - {team.get_score()}")

@@ -1,12 +1,12 @@
 class Round:
-    def _init_(self, categoryTitle):
-        self.categoryTitle = categoryTitle
+    def _init_(self, category_title):
+        self.category_title = category_title
         self.questions = []
 
-        def addQuestion(self, question):
+        def add_question(self, question):
                 self.questions = self.questions + [question]
 
-        def getQuestion(self, index):
+        def get_questoin(self, index):
             if not isinstance(index, int):
                  raise TypeError("The index must be an integer")
             if index < 0 or index>=len(self.questions):

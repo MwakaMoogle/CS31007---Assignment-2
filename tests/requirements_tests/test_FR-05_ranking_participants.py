@@ -7,10 +7,10 @@ class TestParticipantRanking:
         quiz = Quiz("Test Quiz", "Author")
         team_a = Team("Team A")
         team_b = Team("Team B")
-        team_a.addPoints(10)
-        team_b.addPoints(5)
+        team_a.add_points(10)
+        team_b.add_points(5)
         session = GameSession(quiz, [team_a, team_b], 0)
-        leaderboard = session.getLeaderboard()
+        leaderboard = session.get_leaderboard()
 
         assert leaderboard == [team_a, team_b], "Ordered list was not returned as [Team A, Team B]"
 
@@ -18,10 +18,10 @@ class TestParticipantRanking:
         quiz = Quiz("Test Quiz", "Author")
         team_a = Team("Team A")
         team_b = Team("Team B")
-        team_a.addPoints(5)
-        team_b.addPoints(5)
+        team_a.add_points(5)
+        team_b.add_points(5)
         session = GameSession(quiz, [team_a, team_b], 0)
-        leaderboard = session.getLeaderboard()
+        leaderboard = session.get_leaderboard()
 
         assert len(leaderboard) == 2, "Both teams should still appear in the leaderboard"
         assert team_a in leaderboard and team_b in leaderboard, "Both tied teams should be handled cleanly"
@@ -30,15 +30,15 @@ class TestParticipantRanking:
         quiz = Quiz("Test Quiz", "Author")
         team_a = Team("Team A")
         team_b = Team("Team B")
-        team_a.addPoints(5)
-        team_b.addPoints(3)
+        team_a.add_points(5)
+        team_b.add_points(3)
         session = GameSession(quiz, [team_a, team_b], 0)
-        leaderboard = session.getLeaderboard()
+        leaderboard = session.get_leaderboard()
 
         assert leaderboard == [team_a, team_b], "Initial order should be [Team A, Team B]"
 
-        team_b.addPoints(3)
-        updated_leaderboard = session.getLeaderboard()
+        team_b.add_points(3)
+        updated_leaderboard = session.get_leaderboard()
 
         assert updated_leaderboard == [team_b, team_a], "Leaderboard did not update after score change"
 
@@ -46,16 +46,16 @@ class TestParticipantRanking:
         quiz = Quiz("Test Quiz", "Author")
         team_a = Team("Team A")
         team_b = Team("Team B")
-        team_a.addPoints(5)
-        team_b.addPoints(-2)
+        team_a.add_points(5)
+        team_b.add_points(-2)
         session = GameSession(quiz, [team_a, team_b], 0)
-        leaderboard = session.getLeaderboard()
+        leaderboard = session.get_leaderboard()
 
         assert leaderboard == [team_a, team_b], "Negative score should appear at the bottom"
 
     def test_rank_with_zero_participating_teams_returns_empty_list(self):
         quiz = Quiz("Test Quiz", "Author")
         session = GameSession(quiz, [], 0)
-        leaderboard = session.getLeaderboard()
+        leaderboard = session.get_leaderboard()
 
         assert leaderboard == [], "Expected an empty list when there are no participating teams"

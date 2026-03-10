@@ -4,7 +4,7 @@ class Team:
         self.current_score = 0
         self.match_history = []
 
-    def addPoints(self, points):
+    def add_points(self, points):
         if not isinstance(points, int):
             raise TypeError("points must be an integer")
         
