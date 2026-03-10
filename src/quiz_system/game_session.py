@@ -17,11 +17,11 @@ class GameSession:
     def get_leaderboard(self):
         return sorted(
             self.participating_teams, 
-            key=lambda team: team.getScore(), 
+            key=lambda team: team.get_score(), 
             reverse=True )
     
-    def displayLeaderboard(self):
+    def display_leaderboard(self):
         leaderboard = self.get_leaderboard()
 
         for i, team in enumerate(leaderboard, start=1):
-            print(f"{i}. {team.teamName} - {team.get_score()}")
+            print(f"{i}. {team.team_name} - {team.get_score()}")

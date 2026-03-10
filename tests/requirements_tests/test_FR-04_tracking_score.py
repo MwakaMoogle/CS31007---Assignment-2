@@ -37,13 +37,13 @@ class TestTeamTracking:
             team = Team("Team A")
             team.add_points(5)
 
-            assert team.getScore() == 5, "getScore() did not return the expected total"
+            assert team.get_score() == 5, "getScore() did not return the expected total"
 
     
     def test_reset_score_to_0(self):
             team = Team("Team A")
             team.add_points(5)
-            team.resetScore()
+            team.reset_score()
 
             assert team.current_score == 0, "resetScore() did not reset current_score to 0"
 
@@ -74,9 +74,9 @@ class TestGameSessionScoreTracking:
 
             assert len(session.participating_teams) == 2, "GameSession did not store the teams correctly"
 
-            assert session.participating_teams[0].getScore() == 3, "Team A score not stored correctly"
+            assert session.participating_teams[0].get_score() == 3, "Team A score not stored correctly"
 
-            assert session.participating_teams[1].getScore() == 7, "Team B score not stored correctly"
+            assert session.participating_teams[1].get_score() == 7, "Team B score not stored correctly"
 
     
     def test_enter_score_updates_specific_team_score(self):
@@ -87,9 +87,9 @@ class TestGameSessionScoreTracking:
 
             session.enter_score(team_b, 5)
 
-            assert team_a.getScore() == 0, "Wrong team score was modified"
+            assert team_a.get_score() == 0, "Wrong team score was modified"
 
-            assert team_b.getScore() == 5, "Desired team score was not updated correctly"
+            assert team_b.get_score() == 5, "Desired team score was not updated correctly"
 
     def test_enter_score_for_team_not_in_game_session(self):
             quiz = Quiz("Test Quiz", "Author")

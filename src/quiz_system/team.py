@@ -16,8 +16,8 @@ class Team:
         self.match_history.append(points)
 
 
-    def getScore(self):
+    def get_score(self):
         return self.current_score
 
-    def resetScore(self):
+    def reset_score(self):
         self.current_score = 0 
