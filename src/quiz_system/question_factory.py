@@ -8,15 +8,15 @@ class QuestionFactory:
             "MultipleChoice": MultipleChoiceQuestion
     }
 
-    def create_question(self, qType: str, **kwargs):
+    def create_question(self, q_type: str, **kwargs):
         """
         Builds and returns a Question object.
         Expects key arguements like: question_text, correct_answer, scoring_strategy and optionally possible_answers.
         """
 
         # Check if type exists
-        if qType not in self._question_types:
-            raise ValueError(f"Unknown question type: '{qType}'")
+        if q_type not in self._question_types:
+            raise ValueError(f"Unknown question type: '{q_type}'")
 
         # Check for empty question text
         text = kwargs.get("question_text", "")
@@ -29,5 +29,5 @@ class QuestionFactory:
 
 
 
-        question_class = self._question_types[qType]
+        question_class = self._question_types[q_type]
         return question_class(**kwargs)

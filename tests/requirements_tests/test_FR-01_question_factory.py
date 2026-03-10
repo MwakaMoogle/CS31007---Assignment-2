@@ -11,7 +11,7 @@ class TestQuestionFactory:
 
         # Create the Question object and popluate it
         question = factory.create_question(
-            qType = "MultipleChoice",
+            q_type = "MultipleChoice",
             question_text = "What is the capital of France?",
             correct_answer = "Paris",
             possible_answers = ["London", "Paris", "Berlin", "Madrid"]
@@ -30,7 +30,7 @@ class TestQuestionFactory:
 
         # Create the question object and popluate it 
         question = factory.create_question(
-                qType = "Text",
+                q_type = "Text",
                 question_text = "What is 5 + 5?",
                 correct_answer = "10"
                 )
@@ -50,7 +50,7 @@ class TestQuestionFactory:
         # Create a question object and populate it
         with pytest.raises(ValueError, match="Unknown question type: 'Audio'"):
             question = factory.create_question(
-                    qType = "Audio",
+                    q_type = "Audio",
                     question_text = "What song is this?",
                     correct_answer = "SEVEN GOBLINS, Masayoshi Takanaka"
                     )
@@ -64,7 +64,7 @@ class TestQuestionFactory:
         # Testing an empty string as the input for text
         with pytest.raises(ValueError, match="Question text cannot be empty"):
             factory.create_question(
-                qType = "Text",
+                q_type = "Text",
                 question_text = "", # Empty String
                 correct_answer = "10"
                 )
@@ -72,7 +72,7 @@ class TestQuestionFactory:
         # Testing white space(s) for the text
         with pytest.raises(ValueError, match="Question text cannot be empty"):
             factory.create_question(
-                qType = "Text",
+                q_type = "Text",
                 question_text = "   ", # Empty space
                 correct_answer = "10"
                 )
@@ -86,7 +86,7 @@ class TestQuestionFactory:
 
         with pytest.raises(TypeError, match="Answer cannot be None"):
             factory.create_question(
-                qType = "Text",
+                q_type = "Text",
                 question_text = "What is 5 + 5",
                 correct_answer = None #Invalid Data Type Requested
                 )
