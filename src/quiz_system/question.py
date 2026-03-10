@@ -1,10 +1,13 @@
 from abc import ABC, abstractmethod
-from .i_scoring_strategy import IScoringStrategy
+from .i_scoring_strategy import IScoringStrategy, StandardScore
 class Question(ABC):
-    def __init__(self, question_text: str, correct_answer: str, scoring_strategy: IScoringStrategy):
+    def __init__(self, question_text: str, correct_answer: str, scoring_strategy: IScoringStrategy | None = None):
         self.question_text = question_text
         self.correct_answer = correct_answer
-        self.scoring_strategy = scoring_strategy
+        if scoring_strategy == None:
+            self.scoring_strategy = StandardScore()
+        else:
+            self.scoring_strategy = scoring_strategy
 
     @abstractmethod
     def display(self):
@@ -17,7 +20,7 @@ class Question(ABC):
         pass
 
 class MultipleChoiceQuestion(Question):
-    def __init__(self, question_text: str, correct_answer: str, possible_answers: list[str], scoring_strategy: IScoringStrategy):
+    def __init__(self, question_text: str, correct_answer: str, possible_answers: list[str], scoring_strategy: IScoringStrategy | None = None):
         super().__init__(question_text, correct_answer, scoring_strategy)
         self.possible_answers = possible_answers
 
@@ -37,7 +40,7 @@ class MultipleChoiceQuestion(Question):
 
 
 class TextQuestion(Question):
-    def __init__(self, question_text: str, correct_answer: str, scoring_strategy: IScoringStrategy):
+    def __init__(self, question_text: str, correct_answer: str, scoring_strategy: IScoringStrategy | None = None):
         super().__init__(question_text, correct_answer, scoring_strategy)
 
     def display(self):

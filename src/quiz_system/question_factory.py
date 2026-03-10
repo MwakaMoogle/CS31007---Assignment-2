@@ -8,7 +8,7 @@ class QuestionFactory:
             "MultipleChoice": MultipleChoiceQuestion
     }
 
-    def createQuestion(self, qType: str, **kwargs):
+    def create_question(self, qType: str, **kwargs):
         """
         Builds and returns a Question object.
         Expects key arguements like: question_text, correct_answer, scoring_strategy and optionally possible_answers.
@@ -26,6 +26,8 @@ class QuestionFactory:
         # Check for missing answer
         if kwargs.get("correct_answer") is None:
             raise TypeError("Answer cannot be None")
+
+
 
         question_class = self._question_types[qType]
         return question_class(**kwargs)
