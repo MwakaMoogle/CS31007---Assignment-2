@@ -6,10 +6,12 @@ class Round:
     def add_question(self, question):
         self.questions = self.questions + [question]
 
-    def get_question(self, index):
-        if not isinstance(index, int):
-            raise TypeError("The index must be an integer")
-        if index < 0 or index>=len(self.questions):
-            raise IndexError("Enter a question that exists")
+         def get_question(self, index):
+            if not isinstance(index, int):
+                 raise TypeError("The index must be an integer")
+            if index < 0 or index>=len(self.questions):
+                 raise IndexError("Enter a question that exists")
 
-        return self.questions[index]
+        def get_questions(self):
+            return questions
+            

@@ -1,6 +1,6 @@
 class GameSession:
     
-    def __init__(self, current_quiz, participating_teams, current_round_index):
+    def __init__(self, current_quiz, participating_teams, current_round_index = 0):
         self.current_quiz = current_quiz
         self.participating_teams = participating_teams 
         self.current_round_index = current_round_index
