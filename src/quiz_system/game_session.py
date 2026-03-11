@@ -14,6 +14,10 @@ class GameSession:
         
         team.add_points(points)
 
+    def calculate_team_score(self, team, round_index, answer_correct_list):
+        for i, question in enumerate(self.current_quiz.get_rounds()[round_index].get_questions()):
+            self.enter_score(team, question.scoring_strategy.execute_scoring(answer_correct_list[i]))
+
     def get_leaderboard(self):
         return sorted(
             self.participating_teams, 

@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 class IScoringStrategy(ABC):
 
     @abstractmethod
-    def executeScoring(self, isCorrect: bool) -> int:   
+    def execute_scoring(self, isCorrect: bool) -> int:   
         # Check if isCorrect is a boolean
         if not isinstance(isCorrect, bool):
             raise TypeError("isCorrect must be a boolean value")
@@ -14,8 +14,8 @@ class IScoringStrategy(ABC):
 
 class StandardScore(IScoringStrategy):
     
-    def executeScoring(self, isCorrect: bool) -> int:
-        super().executeScoring(isCorrect)
+    def execute_scoring(self, isCorrect: bool) -> int:
+        super().execute_scoring(isCorrect)
         if isCorrect:
             return 1
         else: 
@@ -23,8 +23,8 @@ class StandardScore(IScoringStrategy):
     
 class HardScore(IScoringStrategy):
 
-    def executeScoring(self, isCorrect: bool) -> int:
-        super().executeScoring(isCorrect)
+    def execute_scoring(self, isCorrect: bool) -> int:
+        super().execute_scoring(isCorrect)
         if isCorrect:
             return 5
         else:
@@ -33,8 +33,8 @@ class HardScore(IScoringStrategy):
 class PenaltyScore(IScoringStrategy):
 
     
-    def executeScoring(self, isCorrect: bool) -> int:
-        super().executeScoring(isCorrect)
+    def execute_scoring(self, isCorrect: bool) -> int:
+        super().execute_scoring(isCorrect)
         if isCorrect:
             return 2
         else:
@@ -42,8 +42,8 @@ class PenaltyScore(IScoringStrategy):
 
 class BonusScore(IScoringStrategy):
     
-    def executeScoring(self, isCorrect: bool) -> int:
-        super().executeScoring(isCorrect)
+    def execute_scoring(self, isCorrect: bool) -> int:
+        super().execute_scoring(isCorrect)
         if isCorrect:
             return 10
         else:

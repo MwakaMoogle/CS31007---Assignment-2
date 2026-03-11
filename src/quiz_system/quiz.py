@@ -18,3 +18,6 @@ class Quiz:
 
     def get_total_rounds(self):
         return len(self.rounds)
+
+    def get_rounds(self):
+        return self.rounds

@@ -1,5 +1,5 @@
 import pytest
-from quiz_system import Team, GameSession, Quiz
+from quiz_system import Team, GameSession, Quiz, QuestionFactory, PenaltyScore, HardScore, Round
 
 class TestTeamTracking:
 
@@ -99,3 +99,65 @@ class TestGameSessionScoreTracking:
 
         with pytest.raises(Exception):
             session.enter_score(missing_team, 5)
+
+
+    def test_list_of_correct_or_incorrect(self):
+        factory = QuestionFactory()
+        questions = [
+        factory.create_question(
+            q_type="MultipleChoice",
+            question_text="What is 2+2",
+            correct_answer="4",
+            possible_answers = ["0", "2", "4", "5"],
+            scoring_strategy=PenaltyScore()
+            ),
+            factory.create_question(
+            q_type="MultipleChoice",
+            question_text="If X+Y=6, and Y=1, What is X?",
+            correct_answer="5",
+            possible_answers = ["6", "1", "7", "5"]
+            ),
+            factory.create_question(
+            q_type="Text",
+            question_text="What comes after 6",
+            correct_answer="7"
+            ),
+            factory.create_question(
+            q_type="MultipleChoice",
+            question_text="What is 9+10",
+            correct_answer="19",
+            possible_answers = ["21", "19", "910"],
+            scoring_strategy=HardScore()
+            ),
+            factory.create_question(
+            q_type="Text",
+            question_text="What is 21/3",
+            correct_answer="7",
+            scoring_strategy=HardScore()
+            )
+        ]
+        quiz_round = Round(
+        category_title="Geography"
+        )
+
+        quiz = Quiz("Maths Quiz", "John Pork")
+        quiz.add_round(quiz_round)
+
+        for q in questions:
+            quiz_round.add_question(q)
+
+        team = Team("Test Team")
+
+        correct_incorrect = [False, False, True, True, False]
+
+        session = GameSession(quiz, [team])
+
+        session.calculate_team_score(team, 0, correct_incorrect)
+
+        assert team.get_score() == 6
+        
+
+
+    
+
+
