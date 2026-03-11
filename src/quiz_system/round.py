@@ -16,4 +16,7 @@ class Round:
 
     def get_questions(self):
         return self.questions
-            
+    
+    def remove_question(self, index):
+       pass 
+        

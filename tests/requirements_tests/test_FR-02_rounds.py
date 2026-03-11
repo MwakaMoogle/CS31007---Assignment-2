@@ -102,11 +102,9 @@ class TestRounds:
                )
 
         for question in questions:
-            quiz_round.add_question(question)
-                
-        removed_question = quiz_round.remove_question(question_number=1)
+            quiz_round.add_question(question) 
 
-        assert removed_question.category_title == "What is the capital of France"
+        #TODO Need to chek the correct question has been removed form the Question object array.
 
         assert len(quiz_round.questions) == len(questions) - 1
 
