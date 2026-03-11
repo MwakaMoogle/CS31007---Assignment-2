@@ -148,7 +148,7 @@ class TestRounds:
         for question in questions:
             quiz_round.add_question(question)
             
-        q = quiz_round.get_question(index=1)
+        q = quiz_round.get_question(index=0)
 
         assert q.question_text == "What is the capital of France"
 
