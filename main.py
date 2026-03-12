@@ -1,4 +1,4 @@
-from ./src/quiz_system import *
+from src.quiz_system import *
 def main():
 
     factory = QuestionFactory()
