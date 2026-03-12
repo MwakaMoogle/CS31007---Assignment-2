@@ -22,6 +22,9 @@ class Question(ABC):
 class MultipleChoiceQuestion(Question):
     def __init__(self, question_text: str, correct_answer: str, possible_answers: list[str], scoring_strategy: IScoringStrategy | None = None):
         super().__init__(question_text, correct_answer, scoring_strategy)
+        if not isinstance(possible_answers, list):
+            raise TypeError("Possible Answers must be of type list[str]")
+        
         self.possible_answers = possible_answers
 
     def print_possible_answers(self):

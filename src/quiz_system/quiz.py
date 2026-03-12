@@ -1,3 +1,5 @@
+from .round import Round
+
 class Quiz:
     def __init__(self, title, author):
         self.title = title
@@ -5,7 +7,10 @@ class Quiz:
         self.author = author
 
 
-    def add_round(self, rounds):
+    def add_round(self, rounds: list[Round]):
+        if not isinstance(rounds, list):
+            raise TypeError("rounds must be of type list[Round]")
+
         self.rounds = self.rounds + [rounds] 
 
     def remove_round(self, index):
