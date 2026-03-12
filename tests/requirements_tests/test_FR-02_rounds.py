@@ -105,8 +105,10 @@ class TestRounds:
             quiz_round.add_question(question) 
 
         #TODO Need to chek the correct question has been removed form the Question object array.
+        delete_question = quiz_round.get_question(2)
+        quiz_round.remove_question(2)
 
-        assert len(quiz_round.questions) == len(questions) - 1
+        assert len(quiz_round.questions) == len(questions) - 1 
 
     def test_getting_question_based_on_index(self):
         factory = QuestionFactory()
@@ -192,7 +194,7 @@ class TestRounds:
         for question in questions:
             quiz_round.add_question(question)
 
-        with pytest.raises(IndexError, match="Question not in Round"):
+        with pytest.raises(IndexError, match="Enter a question that exists"):
             q = quiz_round.get_question(index=6)
 
 

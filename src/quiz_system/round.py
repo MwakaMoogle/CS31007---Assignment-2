@@ -18,5 +18,5 @@ class Round:
         return self.questions
     
     def remove_question(self, index):
-       pass 
+       del self.questions[index] 
         
