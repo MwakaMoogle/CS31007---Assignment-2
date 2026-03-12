@@ -1,11 +1,12 @@
-from src.quiz_system import *
+from quiz_system.quiz_ui import QuizUI
+from src.quiz_system import *.py
 def main():
 
     factory = QuestionFactory()
 
     print("====== QUIZ CREATOR ======")
 
-    quiz = create_quiz()
+    quiz = QuizUI.create_quiz()
 
     rounds = create_rounds(factory)
 

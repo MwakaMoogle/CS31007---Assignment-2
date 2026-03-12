@@ -3,65 +3,112 @@ from .round import Round
 from .team import Team
 from .game_session import GameSession
 from .question_factory import QuestionFactory
-from .i_scoring_strategy import PenaltyScore, HardScore
+from .i_scoring_strategy import BonusScore, PenaltyScore, HardScore
 from .question import *
 
 class QuizUI:
-    def create_quiz():
+
+    def __init__(self):
+        self.factory = QuestionFactory()
+
+    def create_quiz(self):
         title = input("Enter your quiz title")
         author = input("Enter the quiz author")
         quiz = Quiz(title, author)
         return quiz
 
-    def create_rounds(factory):
+
+    def __create_text_question(self, question_type, text, answer, scoring):
+        question = self.factory.create_question(
+                q_type=question_type,
+                question_text=text,
+                correct_answer=answer,
+                scoring_strategy=scoring
+                )
+        return question
+
+    def __create_multiplechoice_question(self, question_type, text, answer, scoring, possible_answers):
+        question = self.factory.create_question(
+                q_type=question_type,
+                question_text=text,
+                correct_answer=answer,
+                scoring_strategy=scoring,
+                possible_answers=possible_answers
+                )
+        return question
+
+    def __ask_uesr_for_scoring_strategy(self):
+        scoring = IScoringStrategy
+        print("Please select a scoring strategy from the following")
+        choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalty Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)"))
+        while choice < 1 or choice > 4:
+            print("Please enter a number from 1 to 4.")
+            choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalt Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)"))
+        
+        if choice == 1:
+            scoring = StandardScore
+        elif choice == 2:
+            scoring = HardScore
+        elif choice == 3: 
+            scoring = PenaltyScore
+        elif choice == 4:
+            scoring = BonusScore
+        else:
+            print("Unkown error has occured")
+            exit()
+        
+        return scoring
+
+    def __ask_user_for_possible_answers(self):
+        possible_answers = []
+        arr_length = int(input("Please enter how many possible answers you want (max 4):"))
+        while arr_length < 2 or arr_length > 4:
+            print("Invalid input")
+            arr_length = int(input("Please enter how many possible answers you want (max 4):"))
+        for i in range(arr_length)
+            answer = input("Please enter a possible answer:")
+            possible_answers.append(answer)
+        
+        return possible_answers
+
+        
+
+    def create_rounds(self):
         rounds = []
         num_rounds = int(input("How many rounds would you like to create?"))
 
         for i in range(num_rounds):
+            print(f"Round: {i}")
             round_name = input(f"Enter round name {i+1}:")
             r = Round(round_name)
 
             num_questions = int(input("How many questions do you want in this round?"))
 
             for q in range(num_questions):
-
-                q_type = input("Question type (MultipleChoice/Text): ")
-                question_text = input("Question text: ")
-                correct_answer = input("Correct answer: ")
-
-                scoring = input("Scoring (Standard/Penalty/Hard): ")
-
-                strategy = None
-                if scoring.lower() == "penalty":
-                    strategy = PenaltyScore()
-                elif scoring.lower() == "hard":
-                    strategy = HardScore()
-
-                if q_type == "MultipleChoice":
-
-                    possible_answers = []
-                    num_options = int(input("How many options? "))
-
-                    for i in range(num_options):
-                        option = input(f"Option {i+1}: ")
-                        possible_answers.append(option)
-
-                    question = factory.create_question(
-                        q_type="MultipleChoice",
-                        question_text=question_text,
-                        correct_answer=correct_answer,
-                        possible_answers=possible_answers,
-                        scoring_strategy=strategy
-                    )
-
+                question = None
+                print(f"\nQuestion: {q}")
+                choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question"))
+                while choice < 1 or choice > 2:
+                    print("Please choose between option '1' and '2'")
+                    choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question"))
+                
+                if choice == 1:
+                    text = input("\nEnter the question text here:")
+                    answer = input("\nEnter the answer to the question here:")
+                    scoring =  self.__ask_uesr_for_scoring_strategy()
+                    question = self.__create_text_question("Text", text, answer, scoring)
+                elif choice == 2:
+                    text = input("\nEnter the question text here:")
+                    answer = input("\nEnter the answer to the question here:")
+                    scoring =  self.__ask_uesr_for_scoring_strategy()
+                    possible_answers = self.__ask_user_for_possible_answers()
+                    question = self.__create_multiplechoice_question("MultpleChoice", text, answer, scoring, possible_answers)
+                    
                 else:
+                    print("Unknown errror has occured")
+                    exit()
 
-                    question = factory.create_question(
-                        q_type="Text",
-                        question_text=question_text,
-                        correct_answer=correct_answer,
-                        scoring_strategy=strategy
-                    )
+
 
                 r.add_question(question)
 
@@ -69,7 +116,7 @@ class QuizUI:
 
         return rounds
 
-    def create_teams():
+    def create_teams(self):
         teams = []
 
         num_teams = int(input("How many teams? "))
@@ -80,7 +127,7 @@ class QuizUI:
 
         return teams
 
-    def play_quiz(session, rounds, teams):
+    def play_quiz(self, session, rounds, teams):
 
         for round_index, r in enumerate(rounds):
 
