@@ -102,7 +102,7 @@ class QuizUI:
                     answer = input("\nEnter the answer to the question here:")
                     scoring =  self.__ask_uesr_for_scoring_strategy()
                     possible_answers = self.__ask_user_for_possible_answers()
-                    question = self.__create_multiplechoice_question("MultpleChoice", text, answer, scoring, possible_answers)
+                    question = self.__create_multiplechoice_question("MultipleChoice", text, answer, scoring, possible_answers)
                     
                 else:
                     print("Unknown errror has occured")
@@ -132,7 +132,7 @@ class QuizUI:
         for round_index, r in enumerate(rounds):
 
             print("\n====================")
-            print(f"ROUND: {r.get_name()}")
+            print(f"ROUND: {r.get_title()}")
             print("====================\n")
 
             for question in r.get_questions():

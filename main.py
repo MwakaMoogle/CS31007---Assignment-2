@@ -1,23 +1,21 @@
-from quiz_system.quiz_ui import QuizUI
-from src.quiz_system import *.py
+from src.quiz_system import *
 def main():
 
-    factory = QuestionFactory()
+    ui = QuizUI()
 
     print("====== QUIZ CREATOR ======")
 
-    quiz = QuizUI.create_quiz()
+    quiz = ui.create_quiz()
 
-    rounds = create_rounds(factory)
+    rounds = ui.create_rounds()
 
-    for r in rounds:
-        quiz.add_round(r)
+    quiz.add_rounds(rounds)
 
-    teams = create_teams()
+    teams = ui.create_teams()
 
     session = GameSession(quiz, teams)
 
-    play_quiz(session, rounds, teams)
+    ui.play_quiz(session, rounds, teams)
 
     print("\n====== FINAL SCORES ======")
 

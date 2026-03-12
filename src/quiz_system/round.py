@@ -19,4 +19,7 @@ class Round:
     
     def remove_question(self, index):
        del self.questions[index] 
+
+    def get_title(self):
+        return self.category_title
         

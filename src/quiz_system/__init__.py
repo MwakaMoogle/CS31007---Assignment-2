@@ -19,5 +19,6 @@ __all__ = [
         "TextQuestion",
         "StandardScore",
         "HardScore",
-        "PenaltyScore"
+        "PenaltyScore",
+        "QuizUI"
         ]

@@ -21,3 +21,6 @@ class Team:
 
     def reset_score(self):
         self.current_score = 0 
+
+    def get_name(self):
+        return self.team_name
