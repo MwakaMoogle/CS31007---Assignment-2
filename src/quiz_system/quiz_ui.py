@@ -12,8 +12,8 @@ class QuizUI:
         self.factory = QuestionFactory()
 
     def create_quiz(self):
-        title = input("Enter your quiz title")
-        author = input("Enter the quiz author")
+        title = input("Enter your quiz title: ")
+        author = input("Enter the quiz author: ")
         quiz = Quiz(title, author)
         return quiz
 
@@ -40,10 +40,10 @@ class QuizUI:
     def __ask_uesr_for_scoring_strategy(self):
         scoring = IScoringStrategy
         print("Please select a scoring strategy from the following")
-        choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalty Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)"))
+        choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalty Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)\nEnter here: "))
         while choice < 1 or choice > 4:
             print("Please enter a number from 1 to 4.")
-            choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalt Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)"))
+            choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalt Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)\nEnter here: "))
         
         if choice == 1:
             scoring = StandardScore
@@ -61,10 +61,10 @@ class QuizUI:
 
     def __ask_user_for_possible_answers(self):
         possible_answers = []
-        arr_length = int(input("Please enter how many possible answers you want (max 4):"))
+        arr_length = int(input("Please enter how many possible answers you want (max 4): "))
         while arr_length < 2 or arr_length > 4:
             print("Invalid input")
-            arr_length = int(input("Please enter how many possible answers you want (max 4):"))
+            arr_length = int(input("Please enter how many possible answers you want (max 4): "))
         for i in range(arr_length):
             answer = input("Please enter a possible answer:")
             possible_answers.append(answer)
@@ -75,31 +75,30 @@ class QuizUI:
 
     def create_rounds(self):
         rounds = []
-        num_rounds = int(input("How many rounds would you like to create?"))
+        num_rounds = int(input("How many rounds would you like to create?: "))
 
         for i in range(num_rounds):
             print(f"Round: {i}")
-            round_name = input(f"Enter round name {i+1}:")
+            round_name = input(f"Enter round name {i+1}: ")
             r = Round(round_name)
 
-            num_questions = int(input("How many questions do you want in this round?"))
+            num_questions = int(input("How many questions do you want in this round?: "))
 
             for q in range(num_questions):
                 question = None
                 print(f"\nQuestion: {q}")
-                choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question"))
+                choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question\nEnter here: "))
                 while choice < 1 or choice > 2:
-                    print("Please choose between option '1' and '2'")
-                    choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question"))
+                    print("Please choose between option '1' and '2'") 
+                    choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question\nEner here: "))
                 
+                text = input("Enter the question text here: ")
+                answer = input("Enter the answer to the question here: ")
+
                 if choice == 1:
-                    text = input("\nEnter the question text here:")
-                    answer = input("\nEnter the answer to the question here:")
                     scoring =  self.__ask_uesr_for_scoring_strategy()
                     question = self.__create_text_question("Text", text, answer, scoring)
                 elif choice == 2:
-                    text = input("\nEnter the question text here:")
-                    answer = input("\nEnter the answer to the question here:")
                     scoring =  self.__ask_uesr_for_scoring_strategy()
                     possible_answers = self.__ask_user_for_possible_answers()
                     question = self.__create_multiplechoice_question("MultipleChoice", text, answer, scoring, possible_answers)
@@ -107,8 +106,6 @@ class QuizUI:
                 else:
                     print("Unknown errror has occured")
                     exit()
-
-
 
                 r.add_question(question)
 
@@ -119,7 +116,7 @@ class QuizUI:
     def create_teams(self):
         teams = []
 
-        num_teams = int(input("How many teams? "))
+        num_teams = int(input("How many teams?: "))
 
         for i in range(num_teams):
             name = input(f"Team {i+1} name: ")
@@ -131,9 +128,9 @@ class QuizUI:
 
         for round_index, r in enumerate(rounds):
 
-            print("\n====================")
-            print(f"ROUND: {r.get_title()}")
-            print("====================\n")
+            print("\n==========================================================================")
+            print(f"                         ROUND: {r.get_title()}                            ")
+            print("============================================================================\n")
 
             for question in r.get_questions():
                 question.display()
