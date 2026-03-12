@@ -5,6 +5,7 @@ from .question import Question, MultipleChoiceQuestion, TextQuestion
 from .question_factory import QuestionFactory
 from .round import Round
 from .team import Team
+from .quiz_ui import QuizUI
 
 __all__ = [
         "Quiz",
