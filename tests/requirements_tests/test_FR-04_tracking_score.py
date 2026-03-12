@@ -141,7 +141,7 @@ class TestGameSessionScoreTracking:
         )
 
         quiz = Quiz("Maths Quiz", "John Pork")
-        quiz.add_round(quiz_round)
+        quiz.add_rounds(quiz_round)
 
         for q in questions:
             quiz_round.add_question(q)

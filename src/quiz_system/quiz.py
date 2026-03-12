@@ -7,10 +7,7 @@ class Quiz:
         self.author = author
 
 
-    def add_round(self, rounds: list[Round]):
-        if not isinstance(rounds, list):
-            raise TypeError("rounds must be of type list[Round]")
-
+    def add_rounds(self, rounds):
         self.rounds = self.rounds + [rounds] 
 
     def remove_round(self, index):

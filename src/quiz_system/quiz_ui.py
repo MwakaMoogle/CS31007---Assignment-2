@@ -65,7 +65,7 @@ class QuizUI:
         while arr_length < 2 or arr_length > 4:
             print("Invalid input")
             arr_length = int(input("Please enter how many possible answers you want (max 4):"))
-        for i in range(arr_length)
+        for i in range(arr_length):
             answer = input("Please enter a possible answer:")
             possible_answers.append(answer)
         

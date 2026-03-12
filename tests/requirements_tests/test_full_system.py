@@ -82,7 +82,7 @@ class TestQuizSystem:
             rounds[1].add_question(question)
 
         for r in rounds:
-            quiz.add_round(r)
+            quiz.add_rounds(r)
 
         teams = [Team("Quizzy Rascals"), Team("Quiztopher Columbus"), Team("Oozma Kappa"), Team("The Oracle")]
         session = GameSession(quiz, teams)
