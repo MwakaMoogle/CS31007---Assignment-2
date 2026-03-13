@@ -10,14 +10,14 @@ class QuizUI:
 
     def __init__(self):
         self.factory = QuestionFactory()
+        self.quiz: Quiz
+        self.game_session: GameSession
 
-    def create_quiz(self):
+    def __create_quiz(self):
         title = input("Enter your quiz title: ")
         author = input("Enter the quiz author: ")
-        quiz = Quiz(title, author)
-        return quiz
-
-
+        self.quiz = Quiz(title, author)
+        
     def __create_text_question(self, question_type, text, answer, scoring):
         question = self.factory.create_question(
                 q_type=question_type,
@@ -73,7 +73,7 @@ class QuizUI:
 
         
 
-    def create_rounds(self):
+    def __create_rounds(self):
         rounds = []
         num_rounds = int(input("How many rounds would you like to create?: "))
 
@@ -113,7 +113,7 @@ class QuizUI:
 
         return rounds
 
-    def create_teams(self):
+    def __create_teams(self):
         teams = []
 
         num_teams = int(input("How many teams?: "))
@@ -123,9 +123,37 @@ class QuizUI:
             teams.append(Team(name))
 
         return teams
+    
+    # asks the user for a number between, num_min and num_max
+    def __get_user_choice(self, num_min, num_max):
+        if not isinstance(num_min, int)  or not isinstance(num_max, int):
+            raise TypeError("num_min and num_max must be integers")
+        choice = int(input(f"Enter here: ({num_min}-{num_max})"))
+        while choice < num_min or choice > num_max:
+            print(f"Please enter a number between {num_min} and {num_max}")
+            choice = int(input(f"Enter here: ({num_min}-{num_max})"))
+        return choice
+        
 
-    def play_quiz(self, session, rounds, teams):
 
+
+    def __initialise_quiz(self):
+        print("\n")
+        print("Creating New Quiz...")
+        self.__create_quiz()
+        self.quiz.add_rounds(self.__create_rounds())
+
+
+        
+
+    def __load_quiz(self):
+
+        
+
+    def __play_quiz(self):
+
+        text = input("\nEnter the question text here: ")
+        answer = input("\nEnter the answer to the question here: ")
         for round_index, r in enumerate(rounds):
 
             print("\n==========================================================================")
@@ -153,6 +181,22 @@ class QuizUI:
                 session.calculate_team_score(team, round_index, answers)
 
             session.display_leaderboard()
+
+    def __main_menu(self):
+        print("=================================================================================")
+        print("                                Quiz Systme 1.0                                  ")
+        print("=================================================================================")
+        print("1.New Quiz\n2. Load Quiz\n3.Exit Program")
+        choice = self.__get_user_choice(1, 3)
+        if choice == 1:
+            quiz = self.__initialise_quiz()
+        elif choice ==2:
+            quiz = self.__load_quiz()
+        elif choice == 3:
+            print("Thanks for using the program!!!")
+            exit()
+        else: 
+            print("Unkown Error has Occured")
 
 
 
