@@ -12,6 +12,10 @@ class IScoringStrategy(ABC):
         """
         pass
 
+    @abstractmethod
+    def get_str(self):
+        pass
+
 class StandardScore(IScoringStrategy):
     
     def execute_scoring(self, isCorrect: bool) -> int:
@@ -20,6 +24,9 @@ class StandardScore(IScoringStrategy):
             return 1
         else: 
             return 0
+        
+    def get_str(self):
+        return "StandardScore"
     
 class HardScore(IScoringStrategy):
 
@@ -29,6 +36,9 @@ class HardScore(IScoringStrategy):
             return 5
         else:
             return 0
+        
+    def get_str(self):
+        return "HardScore"
 
 class PenaltyScore(IScoringStrategy):
 
@@ -39,6 +49,9 @@ class PenaltyScore(IScoringStrategy):
             return 2
         else:
             return -1
+        
+    def get_str(self):
+        return "PenaltyScore"
 
 class BonusScore(IScoringStrategy):
     
@@ -48,5 +61,8 @@ class BonusScore(IScoringStrategy):
             return 10
         else:
             return 0
+        
+    def get_str(self):
+        return "BonusScore"
 
 

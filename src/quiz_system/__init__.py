@@ -6,6 +6,7 @@ from .question_factory import QuestionFactory
 from .round import Round
 from .team import Team
 from .quiz_ui import QuizUI
+from .file_manager import FileManager
 
 __all__ = [
         "Quiz",
@@ -20,5 +21,6 @@ __all__ = [
         "StandardScore",
         "HardScore",
         "PenaltyScore",
-        "QuizUI"
+        "QuizUI",
+        "FileManager"
         ]

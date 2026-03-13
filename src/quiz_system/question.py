@@ -19,6 +19,19 @@ class Question(ABC):
     def calculateScore(self):
         pass
 
+    def get_question_text(self):
+        return self.question_text
+    
+    def get_correct_answer(self):
+        return self.correct_answer
+    
+    def get_scoring_strategy_str(self):
+        return self.scoring_strategy.get_str()
+    
+    @abstractmethod
+    def get_type(self):
+        pass
+
 class MultipleChoiceQuestion(Question):
     def __init__(self, question_text: str, correct_answer: str, possible_answers: list[str], scoring_strategy: IScoringStrategy | None = None):
         super().__init__(question_text, correct_answer, scoring_strategy)
@@ -35,7 +48,11 @@ class MultipleChoiceQuestion(Question):
         answer_row = answer_row.strip()
         print(answer_row)
 
+    def get_possible_answers(self):
+        return self.possible_answers
 
+    def get_type(self):
+        return "MultipleChoice"
 
     def display(self):
         super().print_question_text()
@@ -48,3 +65,6 @@ class TextQuestion(Question):
 
     def display(self):
         super().print_question_text()
+
+    def get_type(self):
+        return "Text"

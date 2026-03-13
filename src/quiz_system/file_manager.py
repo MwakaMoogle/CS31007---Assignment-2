@@ -1,9 +1,11 @@
 import json
 from .quiz import Quiz
 from .round import Round
-from question_factory import *
+from .question_factory import *
 
 class FileManager:
+    def __init__(self):
+        pass
     
     def load_quizzes_from_file(self, filename):
         """
@@ -101,9 +103,36 @@ class FileManager:
 
         return quizzes_quiz
     
-    def save_quiz_to_file(self, filename):
+    def save_quizzes_to_file(self, quizzes, filename):
         json_data = {
-            
+            "quizzes": []
         }
+        for quiz in quizzes:
+            rounds = []
+            for r in quiz.get_rounds():
+                questions = []
+                for question in r.get_questions():
+                    questions.append(
+                        {
+                            "question_type": question.get_type(),
+                            "question_text": question.get_text(),
+                            "correct_answer": question.get_answer(),
+                            "possible_answers" if question.get_possible_answers() else None: question.possible_answers if question.get_possible_answers() else None,
+                            "scoring_strategy": question.get_scoring_strategy_str()
+                        }
+                    )
+                rounds.append(
+                    {
+                        "round_title": r.get_title(),
+                        "questions": questions
+                    }
+                )
+            json_data.quizzes.append(
+                {
+                    "quiz_title": quiz.get_title(),
+                    "quiz_author": quiz.get_author(),
+                    "quiz_round": rounds
+                }
+            )
         with open(filename, "w") as file:
             file.write(json_data)
