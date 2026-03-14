@@ -7,18 +7,37 @@ from .i_scoring_strategy import BonusScore, PenaltyScore, HardScore
 from .question import *
 
 class QuizUI:
+    """
+    Class handling UI of the quiz system
+    """
 
     def __init__(self):
+        """
+        Constructor for QuizUI class
+        """
         self.factory = QuestionFactory()
         self.quiz: Quiz
         self.game_session: GameSession
 
     def __create_quiz(self):
+        """
+        Asks user for title and author of quiz, then creates new quiz object
+        """
         title = input("Enter your quiz title: ")
         author = input("Enter the quiz author: ")
         self.quiz = Quiz(title, author)
         
     def __create_text_question(self, question_type, text, answer, scoring):
+        """
+        Creates a question with the "Text" type
+
+        :param question_type: The type of question
+        :param text: The text of the question, i.e. "What is the capital of France?"
+        :param answer: Answer to the question
+        :param scoring: The IScoringStrategy child class to use, i.e. StandardScore, BonusScore etc...
+
+        :returns: created question
+        """
         question = self.factory.create_question(
                 q_type=question_type,
                 question_text=text,
@@ -28,6 +47,17 @@ class QuizUI:
         return question
 
     def __create_multiplechoice_question(self, question_type, text, answer, scoring, possible_answers):
+        """
+        Creates a question with the "MultipleChoice" type
+
+        :param question_type: The type of question
+        :param text: The text of the question, i.e. "What is the capital of France?"
+        :param answer: Answer to the question
+        :param scoring: The IScoringStrategy child class to use, i.e. StandardScore, BonusScore etc...
+        :param possible_answers: The possible answers for the multiple choice question
+
+        :returns: created question
+        """
         question = self.factory.create_question(
                 q_type=question_type,
                 question_text=text,
@@ -37,7 +67,12 @@ class QuizUI:
                 )
         return question
 
-    def __ask_uesr_for_scoring_strategy(self):
+    def __ask_user_for_scoring_strategy(self):
+        """
+        Asks the user which scoring strategy they want to use for a question
+
+        :returns: The scoring strategy to use
+        """
         scoring = IScoringStrategy
         print("Please select a scoring strategy from the following")
         choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalty Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)\nEnter here: "))
@@ -60,6 +95,11 @@ class QuizUI:
         return scoring
 
     def __ask_user_for_possible_answers(self):
+        """
+        Asks the user for possible answers, for a multiple choice question
+
+        :returns: list of possible answers
+        """
         possible_answers = []
         arr_length = int(input("Please enter how many possible answers you want (max 4): "))
         while arr_length < 2 or arr_length > 4:
@@ -74,6 +114,11 @@ class QuizUI:
         
 
     def __create_rounds(self):
+        """
+        asks the user questions about creating rounds, then creates them
+
+        :returns: The newly created rounds
+        """
         rounds = []
         num_rounds = int(input("How many rounds would you like to create?: "))
 
@@ -96,10 +141,10 @@ class QuizUI:
                 answer = input("Enter the answer to the question here: ")
 
                 if choice == 1:
-                    scoring =  self.__ask_uesr_for_scoring_strategy()
+                    scoring =  self.__ask_user_for_scoring_strategy()
                     question = self.__create_text_question("Text", text, answer, scoring)
                 elif choice == 2:
-                    scoring =  self.__ask_uesr_for_scoring_strategy()
+                    scoring =  self.__ask_user_for_scoring_strategy()
                     possible_answers = self.__ask_user_for_possible_answers()
                     question = self.__create_multiplechoice_question("MultipleChoice", text, answer, scoring, possible_answers)
                     
@@ -114,6 +159,11 @@ class QuizUI:
         return rounds
 
     def __create_teams(self):
+        """
+        Asks the user to enter team information
+
+        :returns: List of teams
+        """
         teams = []
 
         num_teams = int(input("How many teams?: "))
