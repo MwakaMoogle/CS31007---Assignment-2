@@ -1,7 +1,17 @@
 from abc import ABC, abstractmethod
 from .i_scoring_strategy import IScoringStrategy, StandardScore
 class Question(ABC):
+    """
+    Parent class for questions
+    """
     def __init__(self, question_text: str, correct_answer: str, scoring_strategy: IScoringStrategy | None = None):
+        """
+        default constructor for questions
+
+        :param question_text: the words of the question, i.e. "What is the capital of France"
+        :param correct_answer: the correct answer to the question
+        :param scoring_strategy: the scoring strategy to be used on the question, defaults to StandardScore strategy
+        """
         self.question_text = question_text
         self.correct_answer = correct_answer
         if scoring_strategy == None:
