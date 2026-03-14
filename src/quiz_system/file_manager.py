@@ -68,6 +68,10 @@ class FileManager:
             },
             ]
         }
+
+        :param filename: the location of the file being read from
+
+        :returns: List of loaded quizzes
         """
         data = None
         with open(filename, "r") as file:
@@ -112,6 +116,12 @@ class FileManager:
         return quizzes_quiz
     
     def save_quizzes_to_file(self, quizzes, filename):
+        """
+        saves list of quizzes to file
+
+        :param quizzes: list of quizzes to be saved
+        :param filename: location of file being written to
+        """
         json_data = {
             "quizzes": []
         }
