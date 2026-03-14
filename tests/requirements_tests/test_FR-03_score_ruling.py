@@ -7,25 +7,25 @@ class TestingScoringStratagey:
 
     def test_standard_correct_1(self):
         strategy = i_scoring_strategy.StandardScore()
-        assert strategy.execute_scoring(isCorrect = True) == 1
+        assert strategy.execute_scoring(is_correct = True) == 1
 
     def test_standard_incorrect_0(self):
         strategy = i_scoring_strategy.StandardScore()
-        assert strategy.execute_scoring(isCorrect = False) == 0
+        assert strategy.execute_scoring(is_correct = False) == 0
 
     def test_hard_correct_5(self):
         strategy = i_scoring_strategy.HardScore()
-        assert strategy.execute_scoring(isCorrect = True) == 5
+        assert strategy.execute_scoring(is_correct = True) == 5
 
     def test_hard_incorrect_0(self):
         strategy = i_scoring_strategy.HardScore()
-        assert strategy.execute_scoring(isCorrect = False) == 0
+        assert strategy.execute_scoring(is_correct = False) == 0
     
     def test_penalty_incorrect_negative_one(self):
         strategy = i_scoring_strategy.PenaltyScore()
-        assert strategy.execute_scoring(isCorrect = False) == -1
+        assert strategy.execute_scoring(is_correct = False) == -1
         
-    #Pass an invalid data type (e.g., a String instead of a Boolean for isCorrect) into the scoring strategy 
+    #Pass an invalid data type (e.g., a String instead of a Boolean for is_correct) into the scoring strategy 
     def test_invalid_type_raise_error(self):
         strategy = i_scoring_strategy.StandardScore()
         with pytest.raises(TypeError):
