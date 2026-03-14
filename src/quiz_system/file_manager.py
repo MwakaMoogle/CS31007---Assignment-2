@@ -4,7 +4,14 @@ from .round import Round
 from .question_factory import *
 
 class FileManager:
+    """
+    Class to manage saving/loading quizzes to/from a file
+    """
+
     def __init__(self):
+        """
+        Empty Constructor for FileManager
+        """
         pass
     
     def load_quizzes_from_file(self, filename):
