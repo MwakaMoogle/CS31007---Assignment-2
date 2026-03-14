@@ -23,3 +23,11 @@ class Quiz:
 
     def get_rounds(self):
         return self.rounds
+    
+    def get_title(self):
+        return self.title
+
+    def get_author(self):
+        return self.author
+    
+

@@ -147,7 +147,7 @@ class QuizUI:
         
 
     def __load_quiz(self):
-
+        pass
         
 
     def __play_quiz(self):

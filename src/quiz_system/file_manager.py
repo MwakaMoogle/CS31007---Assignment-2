@@ -75,27 +75,35 @@ class FileManager:
         if "quizzes" not in data:
             return TypeError("Incorrect JSON format")
         
-        quizzes_dict_list = data.quizzes
+        quizzes_dict_list = data["quizzes"]
 
         quizzes_quiz = []
         for i, quiz_dict in enumerate(quizzes_dict_list):
-            quizzes_quiz.append(Quiz(quiz_dict.quiz_title, quiz_dict.quiz_author))
+            quizzes_quiz.append(Quiz(quiz_dict["quiz_title"], quiz_dict["quiz_author"]))
 
             quiz_rounds = []
-            for j,  r in enumerate(quiz_dict.rounds):
-                quiz_rounds.append(Round(r.round_title))
+            for j,  r in enumerate(quiz_dict["rounds"]):
+                quiz_rounds.append(Round(r["round_title"]))
 
                 round_questions = []
-                for k, q in enumerate(r.questions):
+                for k, q in enumerate(r["questions"]):
                     factory = QuestionFactory()
-
-                    round_questions.append(factory.create_question(
-                        q_type = q.question_type,
-                        question_text = q.question_text,
-                        correct_answer = q.correct_answer,
-                        scoring_strategy = q.scoring_strategy,
-                        possible_answer = q.possible_answers if q.possible_answers else None
-                        ))
+                    
+                    if "possible_answers" in q:
+                        round_questions.append(factory.create_question(
+                            q_type = q["question_type"],
+                            question_text = q["question_text"],
+                            correct_answer = q["correct_answer"],
+                            scoring_strategy = q["scoring_strategy"],
+                            possible_answers = q["possible_answers"]
+                            ))
+                    else:
+                        round_questions.append(factory.create_question(
+                            q_type = q["question_type"],
+                            question_text = q["question_text"],
+                            correct_answer = q["correct_answer"],
+                            scoring_strategy = q["scoring_strategy"]
+                            ))
                     
                 quiz_rounds[j].add_question(round_questions)
 
@@ -111,28 +119,38 @@ class FileManager:
             rounds = []
             for r in quiz.get_rounds():
                 questions = []
-                for question in r.get_questions():
-                    questions.append(
-                        {
-                            "question_type": question.get_type(),
-                            "question_text": question.get_text(),
-                            "correct_answer": question.get_answer(),
-                            "possible_answers" if question.get_possible_answers() else None: question.possible_answers if question.get_possible_answers() else None,
-                            "scoring_strategy": question.get_scoring_strategy_str()
-                        }
-                    )
+                for _, question in enumerate(r.get_questions()):
+                    if hasattr(question, "get_possible_answers"):
+                        questions.append(
+                            {
+                                "question_type": question.get_type(),
+                                "question_text": question.get_question_text(),
+                                "correct_answer": question.get_correct_answer(),
+                                "possible_answers" : question.get_possible_answers(),
+                                "scoring_strategy": question.get_scoring_strategy_str()
+                            }
+                        )
+                    else:
+                        questions.append(
+                            {
+                                "question_type": question.get_type(),
+                                "question_text": question.get_question_text(),
+                                "correct_answer": question.get_correct_answer(),
+                                "scoring_strategy": question.get_scoring_strategy_str()
+                            }
+                        )
                 rounds.append(
                     {
                         "round_title": r.get_title(),
                         "questions": questions
                     }
                 )
-            json_data.quizzes.append(
+            json_data["quizzes"].append(
                 {
                     "quiz_title": quiz.get_title(),
                     "quiz_author": quiz.get_author(),
-                    "quiz_round": rounds
+                    "rounds": rounds
                 }
             )
         with open(filename, "w") as file:
-            file.write(json_data)
+            file.write(json.dumps(json_data))
