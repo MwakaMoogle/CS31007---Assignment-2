@@ -241,7 +241,44 @@ class QuizUI:
 
         print(f"n>>> Successfully loaded=: '{self.quiz.get_title()}'! <<<")
 
-        
+    def __save_quiz(self):
+        """
+        Saves the current active quiz to a JSON file.
+        Safely appends to the exsiting files or updates the quiz if it already exists
+        """
+
+        if not hasattr(self, 'quiz') or self.quiz is None:
+            print("\n[Error] No active quiz to save. please create or load a quiz first.")
+            return
+
+        filename = input("Enter the filename to save to (press Enterfor'test.json'): ")
+        if not filename.strip():
+            filename = "test.json"
+
+        existing_quizzes = []
+        try:
+            loaded_data = self.fm.load_quizzes_from_file(filename)
+            if not isinstance(loaded_data, TypeError) and loaded_data is not None:
+                existing_quizzes = loaded_data
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            print(f"\n[Warning] Could not read exsting file. ({e})")
+
+        quizzes_to_save = []
+        for q in existing_quizzes:
+            if q.get_title() != self.quiz.get_title():
+                quizzes_to_save.append(q)
+                
+        quizzes_to_save.append(self.quiz)
+
+        try:
+            self.fm.save_quizzes_to_file(quizzes_to_save, filename)
+            print(f"\n>>> Successfully saved '{self.quiz.get_title()}' to '{filename}'! <<<")
+        except Exception as e:
+            print(f"\n[Error] An error occurred while saving: {e}")
+
+
 
 
     def __play_quiz(self):
