@@ -5,6 +5,8 @@ from .game_session import GameSession
 from .question_factory import QuestionFactory
 from .i_scoring_strategy import BonusScore, PenaltyScore, HardScore
 from .question import *
+from.file_manager import *
+from quiz_system import file_manager
 
 class QuizUI:
     """
@@ -15,6 +17,7 @@ class QuizUI:
         """
         Constructor for QuizUI class
         """
+        self.fm = FileManager()
         self.factory = QuestionFactory()
         self.quiz: Quiz
         self.game_session: GameSession
@@ -197,8 +200,49 @@ class QuizUI:
         
 
     def __load_quiz(self):
-        pass
+        """
+        Loads an array of quizzes from a JSON file, iteretes through them,
+        and allows the user to select one of them.
+        """
         
+        filename = input("Enter the filename to load from (press Enter for 'test.json'): ")
+        if not filename.strip():
+            filename = "test.json"
+
+        try:
+            quiz_array = self.fm.load_quizzes_from_file(filename)
+        except FileNotFoundError:
+            print(f"\n[Error]COuld not find a file name '{filename}'.")
+            return None
+        except Exception as e:
+            print(f"\n[Error] An unexpected error occured while loading: {e}")
+            return None
+
+        if isinstance(quiz_array, TypeError):
+            print(f"[Error] the JSON file is incorrectly formatted.")
+            return None
+        
+        if not quiz_array or len(quiz_array) == 0:
+            print(f"\n[Error] No quizes foundin '{filename}'.")
+            return None
+        
+        print("\n=================================================================================")
+        print("                               AVAILABLE QUIZZES                                 ")
+        print("=================================================================================")
+        for i, q in enumerate(quiz_array):
+            print(f"{i + 1}.{q.get_title()} (Author: {q.get_author()}")
+
+        print("=================================================================================")
+        print("\nWhich quiz would you like to load?")
+
+        choice = self.__get_user_choice(1, len(quiz_array))
+
+        self.quiz = quiz_array[choice -1]
+
+        print(f"n>>> Successfully loaded=: '{self.quiz.get_title()}'! <<<")
+
+        
+
 
     def __play_quiz(self):
 
