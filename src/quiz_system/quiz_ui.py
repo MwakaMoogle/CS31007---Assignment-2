@@ -118,7 +118,7 @@ class QuizUI:
 
     def __create_rounds(self):
         """
-        asks the user questions about creating rounds, then creates them
+        asks the user questions about creating rounds, then creates them 
 
         :returns: The newly created rounds
         """
