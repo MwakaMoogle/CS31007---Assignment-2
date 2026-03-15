@@ -6,7 +6,6 @@ from .question_factory import QuestionFactory
 from .i_scoring_strategy import BonusScore, PenaltyScore, HardScore
 from .question import *
 from.file_manager import *
-from quiz_system import file_manager
 
 class QuizUI:
     """
@@ -84,13 +83,13 @@ class QuizUI:
             choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalt Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)\nEnter here: "))
         
         if choice == 1:
-            scoring = StandardScore
+            scoring = StandardScore()
         elif choice == 2:
-            scoring = HardScore
+            scoring = HardScore()
         elif choice == 3: 
-            scoring = PenaltyScore
+            scoring = PenaltyScore()
         elif choice == 4:
-            scoring = BonusScore
+            scoring = BonusScore()
         else:
             print("Unkown error has occured")
             exit()
@@ -181,7 +180,7 @@ class QuizUI:
     def __get_user_choice(self, num_min, num_max):
         if not isinstance(num_min, int)  or not isinstance(num_max, int):
             raise TypeError("num_min and num_max must be integers")
-        choice = int(input(f"Enter here: ({num_min}-{num_max})"))
+        choice = int(input(f"Enter here ({num_min}-{num_max}): "))
         while choice < num_min or choice > num_max:
             print(f"Please enter a number between {num_min} and {num_max}")
             choice = int(input(f"Enter here: ({num_min}-{num_max})"))
