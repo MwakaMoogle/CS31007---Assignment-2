@@ -14,7 +14,7 @@ class Team:
 
     def add_points(self, points):
         """
-        adds points to team score
+        Adds points to team score
 
         :param points: how many points to add to the team
         """
