@@ -22,16 +22,25 @@ class QuizUI:
         self.game_session: GameSession
         self.HEADING_SIZE = 80
 
+    def __print_heading_border(self, border_char,nl_before, nl_after, length = None):
+        if length == None:
+            length = self.HEADING_SIZE
+        print(("\n" if nl_before else "") + border_char*length + ("\n" if nl_after else ""))
 
-    def __print_heading(self, heading: str):
-        print("\n" + "="*self.HEADING_SIZE)
+    def __print_heading(self, heading: str, length = None, border_char = "=", add_new_line: bool = True):
+        if length == None:
+            length = self.HEADING_SIZE
+
+        self.__print_heading_border(border_char=border_char, nl_before=True, nl_after=False)
+
         num_chars_in_heading = 0
         for c in heading:
             num_chars_in_heading += 1
 
         num_spaces_each_side = round((self.HEADING_SIZE - num_chars_in_heading) / 2) if num_chars_in_heading < self.HEADING_SIZE else 0
         print(" " * num_spaces_each_side + heading)
-        print("="*self.HEADING_SIZE + "\n")
+
+        self.__print_heading_border(border_char=border_char, nl_before=False, nl_after=add_new_line)
 
 
     def __create_quiz(self):
@@ -238,11 +247,11 @@ class QuizUI:
             print(f"\n[Error] No quizes found in '{filename}'.")
             return None
         
-        self.__print_heading("AVAILABLE QUIZZES")
+        self.__print_heading("AVAILABLE QUIZZES", add_new_line=False)
         for i, q in enumerate(quiz_array):
             print(f"{i + 1}.{q.get_title()} (Author: {q.get_author()})")
 
-        print("="*self.HEADING_SIZE)
+        self.__print_heading_border(border_char="=", nl_before=False, nl_after=False)
         print("\nWhich quiz would you like to load?")
 
         choice = self.__get_user_choice(1, len(quiz_array))
