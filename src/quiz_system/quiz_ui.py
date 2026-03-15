@@ -281,49 +281,92 @@ class QuizUI:
 
 
 
-    def __play_quiz(self):
+    def __play_quiz_as_host(self):
+        """
+        Excecute the main game loop: reading questions, taking team answers,
+        and updating the GameSession leaderboard.
+        """
 
-        text = input("\nEnter the question text here: ")
-        answer = input("\nEnter the answer to the question here: ")
+        if not hasattr(self, 'quiz') or self.quiz is None:
+            print("\n[Error] No quiz loaded. Please create or load a quiz first.")
+            return
+
+        print(f"\n>>> Starting Quiz: '{self.quiz.get_title()}' by {self.quiz.get_author()}")
+        teams = self.__create_teams()
+        if not teams:
+            print("\n[Error] You need at least one to team to play!")
+            return
+        
+        self.game_session = GameSession(self.quiz, teams)
+        self.game_session.start_session()
+
+        rounds = self.quiz.get_rounds()
         for round_index, r in enumerate(rounds):
-
             print("\n==========================================================================")
-            print(f"                         ROUND: {r.get_title()}                            ")
-            print("============================================================================\n")
+            print(f"                         ROUND {round_index + 1}: {r.get_title()}                                 ")
+            print("==========================================================================\n")
+            
+            questions = r.get_questions()
+            if len(questions) > 0 and isinstance(questions[0], list):
+                questions = questions[0]
 
-            for question in r.get_questions():
+            if not questions:
+                print("This roudn has no questions.")
+                continue
+
+            print("--- Questions ---")
+            for q_num, question in enumerate(questions, start=1):
+                print(f"\nQ{q_num}: ", end="")
                 question.display()
-
+                input("(Press Enter for the next question...)")
+            
+            print("\n==========================================================================")
+            print("                              SCORING PHASE                               ")
+            print("==========================================================================\n")
+            
             for team in teams:
-
-                print(f"\nAnswers for {team.get_name()}")
-
+                print(f"\nGrading answers for Team: {team.get_name()}")
                 answers = []
 
-                for question in r.get_questions():
+                for q_num, question in enumerate(questions, start=1):
+                    correct_ans = question.get_corrrect_answer()
 
-                    ans = input("Correct? (y/n): ")
+                    ans = input(f"Did they get Q{q_num} correct? [Answer was: '{correct_ans}'] (y/n): ")
 
-                    if ans.lower() == "y":
+                    if ans.strip().lower() == "y":
                         answers.append(True)
                     else:
                         answers.append(False)
 
-                session.calculate_team_score(team, round_index, answers)
+                    self.game_session.calculate_team_score(team, round_index, answers)
 
-            session.display_leaderboard()
+
+            print("\n--- End of Round Leader Board ---")
+            self.game_session.display_leaderboard()
+
+            if round_index < len(rounds) - 1:
+                input("\nPress Enter to start the next round")
+
+        print("\n==========================================================================")
+        print("                              FINAL RESULTS                               ")
+        print("==========================================================================\n")
+        self.game_session.display_leaderboard()
+        print(f"\nCongratulations to our winners! Thanks for playing.")           
+
 
     def __main_menu(self):
         print("=================================================================================")
         print("                                Quiz Systme 1.0                                  ")
         print("=================================================================================")
-        print("1.New Quiz\n2. Load Quiz\n3.Exit Program")
-        choice = self.__get_user_choice(1, 3)
+        print("1. New Quiz\n2. Load Quiz\n3. Save Quiz\n4. Exit Program")
+        choice = self.__get_user_choice(1, 4)
         if choice == 1:
-            quiz = self.__initialise_quiz()
+           self.__initialise_quiz()
         elif choice ==2:
-            quiz = self.__load_quiz()
+            self.__load_quiz()
         elif choice == 3:
+            self.__save_quiz()
+        elif choice == 4:
             print("Thanks for using the program!!!")
             exit()
         else: 
