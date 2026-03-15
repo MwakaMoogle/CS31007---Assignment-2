@@ -1,12 +1,15 @@
 from abc import ABC, abstractmethod
 from .i_scoring_strategy import IScoringStrategy, StandardScore
+
+
 class Question(ABC):
     """
     Parent class for questions
     """
+
     def __init__(self, question_text: str, correct_answer: str, scoring_strategy: IScoringStrategy | None = None):
         """
-        default constructor for questions
+        Default constructor for questions
 
         :param question_text: the words of the question, i.e. "What is the capital of France"
         :param correct_answer: the correct answer to the question
@@ -24,37 +27,40 @@ class Question(ABC):
         pass
 
     def print_question_text(self):
-        print(self.question_text + ("?" if self.question_text[-1] != "?" else "")) # if the question was written with a "?" at the end, use that, else add it
+        # if the question was written with a "?" at the end, use that, else add it
+        print(self.question_text +
+              ("?" if self.question_text[-1] != "?" else ""))
 
     def calculateScore(self):
         pass
 
     def get_question_text(self):
         return self.question_text
-    
+
     def get_correct_answer(self):
         return self.correct_answer
-    
+
     def get_scoring_strategy_str(self):
         return self.scoring_strategy.get_str()
-    
+
     @abstractmethod
     def get_type(self):
         pass
+
 
 class MultipleChoiceQuestion(Question):
     def __init__(self, question_text: str, correct_answer: str, possible_answers: list[str], scoring_strategy: IScoringStrategy | None = None):
         super().__init__(question_text, correct_answer, scoring_strategy)
         if not isinstance(possible_answers, list):
             raise TypeError("Possible Answers must be of type list[str]")
-        
+
         self.possible_answers = possible_answers
 
     def print_possible_answers(self):
         answer_row = ""
         for answer in self.possible_answers:
             answer_row += answer + " "
-            
+
         answer_row = answer_row.strip()
         print(answer_row)
 
