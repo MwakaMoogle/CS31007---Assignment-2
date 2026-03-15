@@ -25,7 +25,7 @@ class Team:
 
     def get_score(self):
         """
-        :returns: current score of team
+        :returns: Current score of team
         """
         return self.current_score
 
@@ -37,6 +37,6 @@ class Team:
 
     def get_name(self):
         """
-        :returns: team name
+        :returns: Team name
         """
         return self.team_name
