@@ -93,7 +93,7 @@ class QuizUI:
         choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalty Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)\nEnter here: "))
         while choice < 1 or choice > 4:
             print("Please enter a number from 1 to 4.")
-            choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalt Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)\nEnter here: "))
+            choice = int(input("1. Standard Score (1 point)\n2. Hard Score (5 points)\n3. Penalty Score (2 for correct, -1 for incorrect)\n4. Bonus Score (10 points)\nEnter here: "))
         
         if choice == 1:
             scoring = StandardScore()
@@ -147,10 +147,10 @@ class QuizUI:
             for q in range(num_questions):
                 question = None
                 print(f"\nQuestion: {q + 1}")
-                choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question\nEnter here: "))
+                choice = int(input("1. Create a Text Question\n2. Create a Multiple Choice Question\nEnter here: "))
                 while choice < 1 or choice > 2:
                     print("Please choose between option '1' and '2'") 
-                    choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question\nEner here: "))
+                    choice = int(input("1. Create a Text Question\n2. Create a Multiple Choice Question\nEnter here: "))
                 
                 text = input("Enter the question text here: ")
                 answer = input("Enter the answer to the question here: ")
@@ -213,7 +213,7 @@ class QuizUI:
 
     def __load_quiz(self):
         """
-        Loads an array of quizzes from a JSON file, iteretes through them,
+        Loads an array of quizzes from a JSON file, iterates through them,
         and allows the user to select one of them.
         """
         
@@ -235,7 +235,7 @@ class QuizUI:
             return None
         
         if not quiz_array or len(quiz_array) == 0:
-            print(f"\n[Error] No quizes foundin '{filename}'.")
+            print(f"\n[Error] No quizes found in '{filename}'.")
             return None
         
         self.__print_heading("AVAILABLE QUIZZES")
@@ -261,7 +261,7 @@ class QuizUI:
             print("\n[Error] No active quiz to save. please create or load a quiz first.")
             return
 
-        filename = input("Enter the filename to save to (press Enterfor'test.json'): ")
+        filename = input("Enter the filename to save to (press Enter for 'test.json'): ")
         if not filename.strip():
             filename = "test.json"
 
