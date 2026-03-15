@@ -240,7 +240,7 @@ class QuizUI:
         
         self.__print_heading("AVAILABLE QUIZZES")
         for i, q in enumerate(quiz_array):
-            print(f"{i + 1}.{q.get_title()} (Author: {q.get_author()}")
+            print(f"{i + 1}.{q.get_title()} (Author: {q.get_author()})")
 
         print("="*self.HEADING_SIZE)
         print("\nWhich quiz would you like to load?")
