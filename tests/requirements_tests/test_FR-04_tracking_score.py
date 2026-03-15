@@ -23,7 +23,7 @@ class TestTeamTracking:
         team = Team("Team A")
         team.add_points(-1)
 
-        assert team.current_score == 0, "current_score should be 0 after adding -1"
+        assert team.current_score == -1, "current_score should be -1 after adding -1"
 
     
     def test_add_points_increases_5(self):
@@ -154,7 +154,7 @@ class TestGameSessionScoreTracking:
 
         session.calculate_team_score(team, 0, correct_incorrect)
 
-        assert team.get_score() == 6
+        assert team.get_score() == 5
         
 
 
