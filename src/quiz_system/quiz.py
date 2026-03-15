@@ -1,5 +1,3 @@
-from .round import Round
-
 class Quiz:
     """
     Class that handles the quizzes themselves. 
@@ -9,14 +7,13 @@ class Quiz:
     def __init__(self, title, author):
         """
         Constructor for Quiz class.
-        
+
         :param title: title of the quiz
         :param author: author of the quiz
         """
         self.title = title
         self.rounds = []
         self.author = author
-
 
     def add_rounds(self, rounds):
         """
@@ -37,9 +34,10 @@ class Quiz:
         """
         if not isinstance(index, int):
             raise TypeError("index has to be an integer")
-        if index < 0 or index >=len(self.rounds):
-            raise IndexError("This round is outiside the index range, please choose an existing round")
-        
+        if index < 0 or index >= len(self.rounds):
+            raise IndexError(
+                "This round is outiside the index range, please choose an existing round")
+
         self.rounds.pop(index)
 
     def get_total_rounds(self):
@@ -53,7 +51,7 @@ class Quiz:
         :returns: the list of rounds in the quiz
         """
         return self.rounds
-    
+
     def get_title(self):
         """
         :returns: the title of the quiz
@@ -65,5 +63,11 @@ class Quiz:
         :returns: the author of the quiz
         """
         return self.author
-    
 
+    def get_questions_for_round(self, round_index):
+        """
+        gets questions in a specific round
+
+        :returns: questions from specified round
+        """
+        return self.rounds[round_index].get_rounds()

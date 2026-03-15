@@ -1,5 +1,7 @@
 from .quiz import Quiz
 from .team import Team
+
+
 class GameSession:
     """
     Class for a Game Session, handling a quiz and teams
@@ -19,30 +21,31 @@ class GameSession:
             raise TypeError("participating teams must be of type list[Team]")
 
         self.current_quiz = current_quiz
-        self.participating_teams = participating_teams 
+        self.participating_teams = participating_teams
         self.current_round_index = current_round_index
 
     def start_session(self):
         """
         resets the quiz back to the first round
         """
-        self.current_round_index = 0 
+        self.current_round_index = 0
 
     def enter_score(self, team, points):
         """
         adds the points for each round to each team
-        
+
         :param team: The team to add points to
         :param points: the points being added to the team's score
         """
         if team not in self.participating_teams:
             raise ValueError("This team is not in this session")
-        
+
         team.add_points(points)
 
     def calculate_team_score(self, team: Team, round_index: int, answer_correct_list: list[bool]):
         """
-        calculates a team's score for a round, given a list of correct/incorrect, using each question's scoring strategy
+        calculates a team's score for a round, given a list of correct/incorrect,
+        using each question's scoring strategy
 
         :param team: The team of which a score is being calculated
         :param round_index: The index of the quiz's rounds list, which is being calculated
@@ -55,18 +58,19 @@ class GameSession:
         if not isinstance(answer_correct_list, list):
             raise TypeError("answer correct list must be of type list[bool]")
 
-        for i, question in enumerate(self.current_quiz.get_rounds()[round_index].get_questions()):
-            self.enter_score(team, question.scoring_strategy.execute_scoring(answer_correct_list[i]))
+        for i, question in enumerate(self.current_quiz.get_questions_for_round(round_index)):
+            self.enter_score(team, question.scoring_strategy.execute_scoring(
+                answer_correct_list[i]))
 
     def get_leaderboard(self):
         """
         :returns: a sorted leaderboard of teams in the game session
         """
         return sorted(
-            self.participating_teams, 
-            key=lambda team: team.get_score(), 
-            reverse=True )
-    
+            self.participating_teams,
+            key=lambda team: team.get_score(),
+            reverse=True)
+
     def display_leaderboard(self):
         """
         displays the game session's leaderboard
