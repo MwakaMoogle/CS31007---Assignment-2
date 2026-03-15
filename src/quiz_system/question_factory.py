@@ -2,13 +2,15 @@ from .question import *
 
 
 class QuestionFactory:
-    
+    """
+    Factory design pattern for Question class
+    """
     _question_types = {
             "Text": TextQuestion,
             "MultipleChoice": MultipleChoiceQuestion
     }
 
-    def create_question(self, q_type: str, **kwargs):
+    def create_question(self, q_type: str,** kwargs):
         """
         Builds and returns a Question object.
         Expects key arguements like: question_text, correct_answer, scoring_strategy and optionally possible_answers.

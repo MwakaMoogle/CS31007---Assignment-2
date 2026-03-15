@@ -1,7 +1,17 @@
 from abc import ABC, abstractmethod
 from .i_scoring_strategy import IScoringStrategy, StandardScore
 class Question(ABC):
+    """
+    Parent class for questions
+    """
     def __init__(self, question_text: str, correct_answer: str, scoring_strategy: IScoringStrategy | None = None):
+        """
+        default constructor for questions
+
+        :param question_text: the words of the question, i.e. "What is the capital of France"
+        :param correct_answer: the correct answer to the question
+        :param scoring_strategy: the scoring strategy to be used on the question, defaults to StandardScore strategy
+        """
         self.question_text = question_text
         self.correct_answer = correct_answer
         if scoring_strategy == None:
@@ -17,6 +27,19 @@ class Question(ABC):
         print(self.question_text + ("?" if self.question_text[-1] != "?" else "")) # if the question was written with a "?" at the end, use that, else add it
 
     def calculateScore(self):
+        pass
+
+    def get_question_text(self):
+        return self.question_text
+    
+    def get_correct_answer(self):
+        return self.correct_answer
+    
+    def get_scoring_strategy_str(self):
+        return self.scoring_strategy.get_str()
+    
+    @abstractmethod
+    def get_type(self):
         pass
 
 class MultipleChoiceQuestion(Question):
@@ -35,7 +58,11 @@ class MultipleChoiceQuestion(Question):
         answer_row = answer_row.strip()
         print(answer_row)
 
+    def get_possible_answers(self):
+        return self.possible_answers
 
+    def get_type(self):
+        return "MultipleChoice"
 
     def display(self):
         super().print_question_text()
@@ -48,3 +75,6 @@ class TextQuestion(Question):
 
     def display(self):
         super().print_question_text()
+
+    def get_type(self):
+        return "Text"
