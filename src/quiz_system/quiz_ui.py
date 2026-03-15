@@ -329,7 +329,7 @@ class QuizUI:
                 answers = []
 
                 for q_num, question in enumerate(questions, start=1):
-                    correct_ans = question.get_corrrect_answer()
+                    correct_ans = question.get_correct_answer()
 
                     ans = input(f"Did they get Q{q_num} correct? [Answer was: '{correct_ans}'] (y/n): ")
 
