@@ -14,7 +14,64 @@ class FileManager:
         Empty Constructor for FileManager
         """
         pass
+
+    def __open_file(self, filename, mode):
+        """
+        Helper function to open a file
+
+        :param filename: location of file being opened
+        :param mode: mode in which file is being opened (e.g. "r" for read, "w" for write)
+
+        :returns: file object
+        """
+        try:
+            file = open(filename, mode)
+            return file
+        except Exception as e:
+            print(f"Error opening file: {e}")
+            return None
+        
+
+
+    def __close_file(self, file):
+        """
+        Helper function to close a file
+
+        :param file: file object being closed
+        """
+        try:
+            file.close()
+        except Exception as e:
+            print(f"Error closing file: {e}")
     
+    def __read_file(self, file):
+        """
+        Helper function to read a file
+
+        :param file: file object being read from
+
+        :returns: data read from file
+        """
+        try:
+            data = file.read()
+            return data
+        except Exception as e:
+            print(f"Error reading file: {e}")
+            return None
+    
+    def __write_file_json(self, file, data): 
+        """
+        Helper function to write json data to a file
+
+        :param file: file object being written to
+        :param data: data being written to file
+        """
+        try:
+            json_data = json.dumps(data)
+            file.write(json_data)
+        except Exception as e:
+            print(f"Error writing to file: {e}")
+
     def load_quizzes_from_file(self, filename):
         """
         Loads quiz from json file.
@@ -24,7 +81,7 @@ class FileManager:
             "quizzes": [
             {
                 "quiz_title": "Quiz 1",
-                "quiz_author"; "John Pork"
+                "quiz_author": "John Pork",
                 "rounds": [
                     {
                         "round_title": "Geography",
@@ -81,9 +138,20 @@ class FileManager:
 
         :returns: List of loaded quizzes
         """
+        file = self.__open_file(filename, "r")
+        if file is None:
+            return []
+
         data = None
-        with open(filename, "r") as file:
-            data = json.load(file)
+        try:
+            data_str = self.__read_file(file)
+        finally:
+            self.__close_file(file)
+
+        if data_str is None:
+            return []
+
+        data = json.loads(data_str)
         if "quizzes" not in data:
             return TypeError("Incorrect JSON format")
         
@@ -181,5 +249,11 @@ class FileManager:
                     "rounds": rounds
                 }
             )
-        with open(filename, "w") as file:
-            file.write(json.dumps(json_data))
+        file = self.__open_file(filename, "w")
+        if file is None:
+            return
+
+        try:
+            self.__write_file_json(file, json_data)
+        finally:
+            self.__close_file(file)

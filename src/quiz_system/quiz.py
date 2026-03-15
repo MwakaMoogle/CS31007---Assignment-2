@@ -70,4 +70,4 @@ class Quiz:
 
         :returns: questions from specified round
         """
-        return self.rounds[round_index].get_rounds()
+        return self.rounds[round_index].get_questions()
