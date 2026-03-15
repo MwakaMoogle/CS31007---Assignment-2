@@ -355,7 +355,7 @@ class QuizUI:
                     else:
                         answers.append(False)
 
-                    self.game_session.calculate_team_score(team, round_index, answers)
+            self.game_session.calculate_team_score(team, round_index, answers)
 
 
             print("\n--- End of Round Leader Board ---")
