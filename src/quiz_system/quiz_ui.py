@@ -126,7 +126,7 @@ class QuizUI:
         num_rounds = int(input("How many rounds would you like to create?: "))
 
         for i in range(num_rounds):
-            print(f"Round: {i}")
+            print(f"Round: {i + 1}")
             round_name = input(f"Enter round name {i+1}: ")
             r = Round(round_name)
 
@@ -134,7 +134,7 @@ class QuizUI:
 
             for q in range(num_questions):
                 question = None
-                print(f"\nQuestion: {q}")
+                print(f"\nQuestion: {q + 1}")
                 choice = int(input("1. Create a Text Question\n2. Create Multiplechoice Question\nEnter here: "))
                 while choice < 1 or choice > 2:
                     print("Please choose between option '1' and '2'") 
@@ -299,7 +299,8 @@ class QuizUI:
         
         self.game_session = GameSession(self.quiz, teams)
         self.game_session.start_session()
-
+        
+        # Main loop
         rounds = self.quiz.get_rounds()
         for round_index, r in enumerate(rounds):
             print("\n==========================================================================")
@@ -352,25 +353,127 @@ class QuizUI:
         print("==========================================================================\n")
         self.game_session.display_leaderboard()
         print(f"\nCongratulations to our winners! Thanks for playing.")           
+    
+    def __play_quiz_as_player(self):
+        """
+        Executes the game loop for a single player (Jamie's Persona).
+        The system automatically checks the user's typed answers against the correct answers
+        and provides instant visual feedback.
+        """
+        
+        if not hasattr(self, 'quiz') or self.quiz is None:
+            print("\n[Error] No quiz loaded. Please create or load a quiz first.")
+            return
+
+        print("\n==========================================================================")
+        print(f"             SOLO MODE: '{self.quiz.get_title()}' by {self.quiz.get_author()}       ")
+        print("==========================================================================\n")
+
+        
+        player_name = input("Enter your player name: ")
+        if not player_name.strip():
+            player_name = "Player 1"
+        player = Team(player_name)
+
+        self.game_session = GameSession(self.quiz, [player])
+        self.game_session.start_session()
+        
+        # Main loop
+        rounds = self.quiz.get_rounds()
+        for round_index, r in enumerate(rounds):
+            print("\n==========================================================================")
+            print(f"                         ROUND {round_index + 1}: {r.get_title()}                            ")
+            print("==========================================================================\n")
+
+            questions = r.get_questions()
+            if len(questions) > 0 and isinstance(questions[0], list):
+                questions = questions[0] 
+
+            if not questions:
+                print("This round has no questions.")
+                continue
+
+            answers = [] 
+
+            for q_num, question in enumerate(questions, start=1):
+                print(f"\nQ{q_num}: ", end="")
+                question.display()
+            
+                user_answer = input("\nYour Answer: ")
+                
+                correct_answer = str(question.get_correct_answer()).strip().lower()
+                user_answer_clean = str(user_answer).strip().lower()
+                
+                is_correct = (user_answer_clean == correct_answer)
+                answers.append(is_correct)
+
+                if is_correct:
+                    print("Correct! Great job!")
+
+                else:
+                    print(f"Incorrect! The right answer was: '{question.get_correct_answer()}'")
+
+                input("(Press Enter to continue...)")
+            
+            self.game_session.calculate_team_score(player, round_index, answers)
+
+            print(f"\n--- End of Round {round_index + 1} ---")
+            print(f"Your Current Score: {player.get_score()} points")
+            
+            if round_index < len(rounds) - 1:
+                input("\nPress Enter to start the next round...")
+
+        print("\n==========================================================================")
+        print("                              FINAL RESULTS                               ")
+        print("==========================================================================\n")
+        print(f"Well played, {player.get_name()}!")
+        print(f"Final Score: {player.get_score()} points")
 
 
     def __main_menu(self):
         print("=================================================================================")
-        print("                                Quiz Systme 1.0                                  ")
+        print("                                Quiz System 1.0                                  ")
         print("=================================================================================")
-        print("1. New Quiz\n2. Load Quiz\n3. Save Quiz\n4. Exit Program")
-        choice = self.__get_user_choice(1, 4)
+        print("1. New Quiz")
+        print("2. Load Quiz")
+        print("3. Save Quiz")
+        print("4. Play Quiz (Host Mode - Multiple Teams)")
+        print("5. Play Quiz (Solo Mode - Interactive)")
+        print("6. Exit Program")
+        
+        choice = self.__get_user_choice(1, 6) 
+        
         if choice == 1:
-           self.__initialise_quiz()
-        elif choice ==2:
+            self.__initialise_quiz()
+        elif choice == 2:
             self.__load_quiz()
         elif choice == 3:
             self.__save_quiz()
         elif choice == 4:
+            self.__play_quiz_as_host()  
+        elif choice == 5:
+            self.__play_quiz_as_player() 
+        elif choice == 6:
             print("Thanks for using the program!!!")
             exit()
         else: 
-            print("Unkown Error has Occured")
+            print("Unknown Error has Occurred")
 
+    def run_quiz(self):
+        """
+        Public entry point for the Quiz Management System.
+        Keeps the application running in a continuous loop until the user exits.
+        """
+        print("\n" + "="*80)
+        print("          Welcome to the Quiz Management System          ")
+        print("="*80)
 
-
+        while True:
+            try:
+                self.__main_menu()
+            except KeyboardInterrupt:
+                print("\n\nExiting program.")
+                exit()
+            except Exception as e:
+                print(f"\n[Fatal Error] An unexpected error occurred: {e}")
+                print("Returning to the main menu\n")
