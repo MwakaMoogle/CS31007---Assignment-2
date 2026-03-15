@@ -2,6 +2,7 @@ import json
 from .quiz import Quiz
 from .round import Round
 from .question_factory import *
+from .i_scoring_strategy import StandardScore, HardScore, PenaltyScore, BonusScore
 
 class FileManager:
     """
@@ -99,13 +100,23 @@ class FileManager:
                 round_questions = []
                 for k, q in enumerate(r["questions"]):
                     factory = QuestionFactory()
+                    strategy_str = q.get("scoring_strategy", "StandardScore")
+                    
+                    if strategy_str == "HardScore":
+                        scoring_obj = HardScore()
+                    elif strategy_str == "PenaltyScore":
+                        scoring_obj = PenaltyScore()
+                    elif strategy_str == "BonusScore":
+                        scoring_obj = BonusScore()
+                    else:
+                        scoring_obj = StandardScore()
                     
                     if "possible_answers" in q:
                         round_questions.append(factory.create_question(
                             q_type = q["question_type"],
                             question_text = q["question_text"],
                             correct_answer = q["correct_answer"],
-                            scoring_strategy = q["scoring_strategy"],
+                            scoring_strategy = scoring_obj, 
                             possible_answers = q["possible_answers"]
                             ))
                     else:
@@ -113,10 +124,11 @@ class FileManager:
                             q_type = q["question_type"],
                             question_text = q["question_text"],
                             correct_answer = q["correct_answer"],
-                            scoring_strategy = q["scoring_strategy"]
+                            scoring_strategy = scoring_obj
                             ))
                     
-                quiz_rounds[j].add_question(round_questions)
+                for question_obj in round_questions:
+                    quiz_rounds[j].add_question(question_obj)
 
             quizzes_quiz[i].add_rounds(quiz_rounds)
 
