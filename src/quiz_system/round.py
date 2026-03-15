@@ -53,6 +53,6 @@ class Round:
 
     def get_title(self):
         """
-        :returns: title of the round
+        :returns: Title of the round
         """
         return self.category_title
