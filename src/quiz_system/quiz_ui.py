@@ -20,6 +20,19 @@ class QuizUI:
         self.factory = QuestionFactory()
         self.quiz: Quiz
         self.game_session: GameSession
+        self.HEADING_SIZE = 80
+
+
+    def __print_heading(self, heading: str):
+        print("\n" + "="*self.HEADING_SIZE)
+        num_chars_in_heading = 0
+        for c in heading:
+            num_chars_in_heading += 1
+
+        num_spaces_each_side = round((self.HEADING_SIZE - num_chars_in_heading) / 2) if num_chars_in_heading < self.HEADING_SIZE else 0
+        print(" " * num_spaces_each_side + heading)
+        print("="*self.HEADING_SIZE + "\n")
+
 
     def __create_quiz(self):
         """
@@ -225,13 +238,11 @@ class QuizUI:
             print(f"\n[Error] No quizes foundin '{filename}'.")
             return None
         
-        print("\n=================================================================================")
-        print("                               AVAILABLE QUIZZES                                 ")
-        print("=================================================================================")
+        self.__print_heading("AVAILABLE QUIZZES")
         for i, q in enumerate(quiz_array):
             print(f"{i + 1}.{q.get_title()} (Author: {q.get_author()}")
 
-        print("=================================================================================")
+        print("="*self.HEADING_SIZE)
         print("\nWhich quiz would you like to load?")
 
         choice = self.__get_user_choice(1, len(quiz_array))
@@ -302,9 +313,8 @@ class QuizUI:
         # Main loop
         rounds = self.quiz.get_rounds()
         for round_index, r in enumerate(rounds):
-            print("\n==========================================================================")
-            print(f"                         ROUND {round_index + 1}: {r.get_title()}                                 ")
-            print("==========================================================================\n")
+            
+            self.__print_heading(f"ROUND {round_index + 1}: {r.get_title()}")
             
             questions = r.get_questions()
             if len(questions) > 0 and isinstance(questions[0], list):
@@ -320,9 +330,7 @@ class QuizUI:
                 question.display()
                 input("(Press Enter for the next question...)")
             
-            print("\n==========================================================================")
-            print("                              SCORING PHASE                               ")
-            print("==========================================================================\n")
+            self.__print_heading("SCORING PHASE")
             
             for team in teams:
                 print(f"\nGrading answers for Team: {team.get_name()}")
@@ -347,9 +355,7 @@ class QuizUI:
             if round_index < len(rounds) - 1:
                 input("\nPress Enter to start the next round")
 
-        print("\n==========================================================================")
-        print("                              FINAL RESULTS                               ")
-        print("==========================================================================\n")
+        self.__print_heading("FINAL RESULTS")
         self.game_session.display_leaderboard()
         print(f"\nCongratulations to our winners! Thanks for playing.")           
     
@@ -364,10 +370,7 @@ class QuizUI:
             print("\n[Error] No quiz loaded. Please create or load a quiz first.")
             return
 
-        print("\n==========================================================================")
-        print(f"             SOLO MODE: '{self.quiz.get_title()}' by {self.quiz.get_author()}       ")
-        print("==========================================================================\n")
-
+        self.__print_heading(f"SOLO MODE: '{self.quiz.get_title()}' by {self.quiz.get_author()}")
         
         player_name = input("Enter your player name: ")
         if not player_name.strip():
@@ -380,9 +383,7 @@ class QuizUI:
         # Main loop
         rounds = self.quiz.get_rounds()
         for round_index, r in enumerate(rounds):
-            print("\n==========================================================================")
-            print(f"                         ROUND {round_index + 1}: {r.get_title()}                            ")
-            print("==========================================================================\n")
+            self.__print_heading(f"ROUND {round_index + 1}: {r.get_title()}")
 
             questions = r.get_questions()
             if len(questions) > 0 and isinstance(questions[0], list):
@@ -422,17 +423,13 @@ class QuizUI:
             if round_index < len(rounds) - 1:
                 input("\nPress Enter to start the next round...")
 
-        print("\n==========================================================================")
-        print("                              FINAL RESULTS                               ")
-        print("==========================================================================\n")
+        self.__print_heading("FINAL RESULTS")
         print(f"Well played, {player.get_name()}!")
         print(f"Final Score: {player.get_score()} points")
 
 
     def __main_menu(self):
-        print("=================================================================================")
-        print("                                Quiz System 1.0                                  ")
-        print("=================================================================================")
+        self.__print_heading("Quiz System 1.0")
         print("1. New Quiz")
         print("2. Load Quiz")
         print("3. Save Quiz")
@@ -463,9 +460,7 @@ class QuizUI:
         Public entry point for the Quiz Management System.
         Keeps the application running in a continuous loop until the user exits.
         """
-        print("\n" + "="*80)
-        print("          Welcome to the Quiz Management System          ")
-        print("="*80)
+        self.__print_heading("Welcome to the Quiz Management System")
 
         while True:
             try:
